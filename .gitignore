@@ -1,0 +1,17 @@
+# Ignore secrets
+*secret*
+
+# Ignore histories
+*history*
+
+# Ignore all .DS_Store files (common in macOS)
+.DS_Store
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore all files with .env extension
+*.env
+
+# Ignore all .log files
+*.log
