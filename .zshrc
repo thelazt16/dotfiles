@@ -44,7 +44,6 @@ fi
 plugins=(
     bgnotify
     colored-man-pages
-    command-not-found
     fzf-tab
     git
     nvm
@@ -58,9 +57,7 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
 zstyle ':omz:plugins:nvm' lazy yes
-zstyle ':omz:plugins:nvm' lazy-cmd node
 zstyle ':omz:plugins:colored-man-pages' lazy yes
-zstyle ':omz:plugins:command-not-found' lazy yes
 zstyle ':omz:plugins:git' lazy yes
 zstyle ':omz:plugins:bgnotify' lazy yes
 zstyle ':omz:plugins:thefuck' lazy yes
@@ -70,7 +67,8 @@ zstyle ':omz:plugins:thefuck' lazy yes
 # ╚═╝╩ ╩╚═╝╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝
 ZSHDIR="$HOME/.config/zsh"
 HISTSIZE=10000
-SAVEHIST=10000
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -83,12 +81,14 @@ export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 # ╔═╝╚═╗╠═╣  ║ ║╠═╝ ║ ║║ ║║║║╚═╗
 # ╚═╝╚═╝╩ ╩  ╚═╝╩   ╩ ╩╚═╝╝╚╝╚═╝
 # ZSH cool options to make your life easier
+setopt APPENDHISTORY        # Append event instead of overwriting 
 setopt AUTOCD               # change directory just by typing its name
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 setopt HIST_FIND_NO_DUPS    # When searching history don't display results already cycled through twice
-setopt HIST_IGNORE_ALL_DUPS	    # Do not write events to history that are duplicates of previous events
+setopt HIST_IGNORE_ALL_DUPS	# Do not write events to history that are duplicates of previous events
 setopt HIST_IGNORE_DUPS	    # Do not write events to history that are duplicates of previous events
+setopt HIST_IGNORE_SPACE    # Do not write events to history that are started with space
 setopt HIST_SAVE_NO_DUPS	# Do not save events to history that are duplicates of previous events
 setopt LIST_PACKED		    # The completion menu takes less space.
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
@@ -173,6 +173,7 @@ precmd() {
 # ║║║║║ ║ ╚═╗
 # ╩╝╚╝╩ ╩ ╚═╝
 eval "$(starship init zsh)"
+# eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/ohmyposh.toml)"
 source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
