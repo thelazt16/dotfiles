@@ -1,0 +1,28 @@
+{
+  "minimumDistanceBeforeTurn": 3,
+  "randomThreshold": 0.069,
+  "randomMode": 69,
+  "FPS": 36,
+  "colors": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "unstretchVertical": false,
+  "unstretchFactor": 144,
+  "maximumCharacters": -1,
+  "numberOfHeads": 3,
+  "characters": {
+    "upperLeft": "╭",
+    "upperRight": "╮",
+    "bottomRight": "╯",
+    "bottomLeft": "╰",
+    "horizontal": "─",
+    "vertical": "│"
+  }
+}
