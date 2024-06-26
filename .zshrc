@@ -6,7 +6,43 @@
 # ╚══════╝╚══════╝╚═╝  ╚═╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
 # thelazt16
 # github.com/thelazt16
-# Figlet font: ANSI Shadown, Calvin S, tmplr
+# Figlet font: ANSI Shadow, Calvin S, tmplr
+
+# ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗╦ ╦╔═╗
+# ║ ║║║║╔═╝  ╚═╗║╣  ║ ║ ║╠═╝
+# ╚═╝╩ ╩╚═╝  ╚═╝╚═╝ ╩ ╚═╝╩
+# check if oh-my-zsh is installed, otherwise install it.
+export ZSH="$HOME/.oh-my-zsh"
+if [[ ! -d ~/.oh-my-zsh ]]; then
+    echo "oh-my-zsh not installed."
+    OMZ_CUSPLUG="$HOME/.oh-my-zsh/custom/plugins"
+    git clone https://github.com/ohmyzsh/ohmyzsh.git $ZSH
+    git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSPLUG/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
+    clear
+fi
+
+# ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╦ ╦╦═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+# ║ ║║║║╔═╝  ║  ║ ║║║║╠╣ ║║ ╦║ ║╠╦╝╠═╣ ║ ║║ ║║║║╚═╗
+# ╚═╝╩ ╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+# ZSH_THEME="robbyrussell" # Uncomment if not using starship
+plugins=(
+    bgnotify
+    colored-man-pages
+    command-not-found
+    git
+    nvm
+    thefuck
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting
+    zsh-interactive-cd
+)
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' lazy-cmd node
 
 # ╔╗ ╔═╗╔═╗╦╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╔═╗
 # ╠╩╗╠═╣╚═╗║║    ║  ║ ║║║║╠╣ ║║ ╦╚═╗
@@ -15,48 +51,12 @@ ZSHDIR="$HOME/.config/zsh"
 HISTSIZE=10000
 SAVEHIST=10000
 
-# ╔═╗╔═╗╦  ╦ ╦╔═╗  ╦╔╗╔╦╔╦╗
-# ╔═╝╠═╝║  ║ ║║ ╦  ║║║║║ ║ 
-# ╚═╝╩  ╩═╝╚═╝╚═╝  ╩╝╚╝╩ ╩ 
-# install zplug if not installed then initialized
-if [[ ! -d ~/.zplug ]]; then
-    export ZPLUG_HOME=$HOME/.zplug
-    git clone https://github.com/zplug/zplug $ZPLUG_HOME
-    source ~/.zplug/init.zsh && zplug update
-fi
-source ~/.zplug/init.zsh
-
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝
 export EDITOR='code'
 export BROWSER='firefox'
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
-
-# ╔╗ ╦╔╗╔╔═╗╦═╗╦╔═╗╔═╗
-# ╠╩╗║║║║╠═╣╠╦╝║║╣ ╚═╗
-# ╚═╝╩╝╚╝╩ ╩╩╚═╩╚═╝╚═╝
-# Sourcing binaries to load to $PATH
-if [ -d "$HOME/.local/bin" ] ;
-    then PATH="$HOME/.local/bin:$PATH"
-fi
-if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-fi
-PATH=~/.console-ninja/.bin:$PATH
-# ┓ ┏┳┳┓  ┏┓┏┓┏┓┏┓┳┏┓┳┏┓
-# ┃┃┃┃┃┃  ┗┓┃┃┣ ┃ ┃┣ ┃┃ 
-# ┗┻┛┛ ┗  ┗┛┣┛┗┛┗┛┻┻ ┻┗┛
-# Load script specific to each wm
-current_wm="$(wmctrl -m | awk -F': ' '/Name/ {print $2}')"
-case "$current_wm" in
-    Hyprland*)
-        PATH="$HOME/.bin/hyprland:$HOME/.config/hypr/scripts:$PATH"
-    ;;
-    *)
-        PATH="$HOME/.bin/$current_wm:$PATH"
-    ;;
-esac
 
 # ╔═╗╔═╗╦ ╦  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
 # ╔═╝╚═╗╠═╣  ║ ║╠═╝ ║ ║║ ║║║║╚═╗
@@ -105,44 +105,48 @@ zle -N add_sudo  # Associate function with a zle widget
 # Bind the grave key (`) to the add_sudo function when pressed twice
 bindkey "\`\`" add_sudo
 
+# ╔╗ ╦╔╗╔╔═╗╦═╗╦╔═╗╔═╗
+# ╠╩╗║║║║╠═╣╠╦╝║║╣ ╚═╗
+# ╚═╝╩╝╚╝╩ ╩╩╚═╩╚═╝╚═╝
+# Sourcing binary directories to load to $PATH
+if [ -d "$HOME/.local/bin" ] ;
+    then PATH="$HOME/.local/bin:$PATH"
+fi
+if [ -d "$HOME/bin" ]; then
+    PATH="$HOME/bin:$PATH"
+fi
 
-# ╔═╗╔═╗╦  ╦ ╦╔═╗  ╔═╗╦  ╦ ╦╔═╗╦╔╗╔╔═╗
-# ╔═╝╠═╝║  ║ ║║ ╦  ╠═╝║  ║ ║║ ╦║║║║╚═╗
-# ╚═╝╩  ╩═╝╚═╝╚═╝  ╩  ╩═╝╚═╝╚═╝╩╝╚╝╚═╝
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug "lukechilds/zsh-nvm"
-# zplug "changyuheng/fz", defer:1 # now using zoxide instead
-# zplug "rupa/z", use:z.sh # now using zoxide instead
-
-zplug "lib/completion", from:oh-my-zsh
-zplug "lib/history", from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/command-not-found", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/thefuck", from:oh-my-zsh
-zplug "plugins/bgnotify", from:oh-my-zsh
-zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
-
-#MichaelAquilina
-zplug "MichaelAquilina/zsh-you-should-use"
-
-source /usr/share/doc/find-the-command/ftc.zsh noprompt quiet
+# ┓ ┏┳┳┓  ┏┓┏┓┏┓┏┓┳┏┓┳┏┓
+# ┃┃┃┃┃┃  ┗┓┃┃┣ ┃ ┃┣ ┃┃ 
+# ┗┻┛┛ ┗  ┗┛┣┛┗┛┗┛┻┻ ┻┗┛
+# Load script specific to each wm
+current_wm="$(wmctrl -m | awk -F': ' '/Name/ {print $2}')"
+case "$current_wm" in
+    Hyprland*)
+        PATH="$HOME/.bin/hyprland:$HOME/.config/hypr/scripts:$PATH"
+    ;;
+    *)
+        PATH="$HOME/.bin/$current_wm:$PATH"
+    ;;
+esac
 
 # ╔═╗╦  ╦╔═╗╔═╗╔═╗╔═╗
 # ╠═╣║  ║╠═╣╚═╗║╣ ╚═╗
 # ╩ ╩╩═╝╩╩ ╩╚═╝╚═╝╚═╝
 source "$ZSHDIR/aliases.zsh"
-source "$ZSHDIR/pacman.zsh"
-source "$ZSHDIR/wireguard.zsh"
+# check if wireguard is installed, then source the aliases
+if which wg > /dev/null 2>&1; then
+    source "$ZSHDIR/wireguard.zsh"
+fi
+# check if pacman is installed, then source the aliases
+if which pacman > /dev/null 2>&1; then
+    source "$ZSHDIR/pacman.zsh"
+fi
 
 # ╔═╗╔╦╗╔╦╗
 # ║  ║║║ ║║
 # ╚═╝╩ ╩═╩╝
-
-# source aliases.zsh so that any changes made will be applied right away
+# source aliases.zsh so that any changes made will be applied on enter
 precmd() {
     source "$ZSHDIR/aliases.zsh"
 }
@@ -150,28 +154,8 @@ precmd() {
 # ╦╔╗╔╦╔╦╗╦╔═╗╦  ╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔
 # ║║║║║ ║ ║╠═╣║  ║╔═╝╠═╣ ║ ║║ ║║║║
 # ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝
-# ┏┓┏┳┓┏┓┳┓┏┓┓┏┳┏┓
-# ┗┓ ┃ ┣┫┣┫┗┓┣┫┃┃┃
-# ┗┛ ┻ ┛┗┛┗┗┛┛┗┻┣┛
-# Initiliaze startship first
 eval "$(starship init zsh)"
-
-# ┏┓┏┓┓ ┳┳┏┓
-# ┏┛┃┃┃ ┃┃┃┓
-# ┗┛┣┛┗┛┗┛┗┛
-# Check for plugin and load zplug
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-    echo
-fi
-zplug load
-
-# ┏┓┏┳┓┓┏┏┓┳┓┏┓
-# ┃┃ ┃ ┣┫┣ ┣┫┗┓
-# ┗┛ ┻ ┛┗┗┛┛┗┗┛
+source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(atuin init zsh)"
@@ -180,6 +164,5 @@ eval "$(atuin init zsh)"
 # ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
 # ┗┛┗┛┗┛  ┗┛┛┗┛┗┻┛┻┗┛┗┛
 # Last but not least, UNLEASH the eye candies
-$HOME/.local/bin/colorscript -r
+$HOME/bin/colorscript -r
 fortune
-
