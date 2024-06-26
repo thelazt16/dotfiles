@@ -59,6 +59,18 @@ SAVEHIST=10000
 export EDITOR='code'
 export BROWSER='firefox'
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
+
+# ╔═╗╔═╗╦ ╦  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+# ╔═╝╚═╗╠═╣  ║ ║╠═╝ ║ ║║ ║║║║╚═╗
+# ╚═╝╚═╝╩ ╩  ╚═╝╩   ╩ ╩╚═╝╝╚╝╚═╝
+# ZSH cool options to make your life easier
+setopt AUTOCD               # change directory just by typing its name
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
+setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
+setopt HIST_FIND_NO_DUPS    # When searching history don't display results already cycled through twice
+setopt HIST_IGNORE_ALL_DUPS	    # Do not write events to history that are duplicates of previous events
+setopt HIST_IGNORE_DUPS	    # Do not write events to history that are duplicates of previous events
+setopt HIST_SAVE_NO_DUPS	# Do not save events to history that are duplicates of previous events
 setopt LIST_PACKED		    # The completion menu takes less space.
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
 setopt PROMPT_SUBST         # enable command substitution in prompt
