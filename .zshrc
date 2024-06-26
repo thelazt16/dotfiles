@@ -20,7 +20,7 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSPLUG/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
-    # git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
+    git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
     clear
 fi
 
@@ -59,7 +59,6 @@ SAVEHIST=10000
 export EDITOR='code'
 export BROWSER='firefox'
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
-git clone https://github.com/Aloxaf/fzf-tabious events
 setopt LIST_PACKED		    # The completion menu takes less space.
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
 setopt PROMPT_SUBST         # enable command substitution in prompt
@@ -67,7 +66,10 @@ setopt SHAREHISTORY         # share history to other prompt right away not at la
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu no 
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
 # ╦╔═╔═╗╦ ╦╔╗ ╦╔╗╔╔╦╗╦╔╗╔╔═╗╔═╗
 # ╠╩╗║╣ ╚╦╝╠╩╗║║║║ ║║║║║║║ ╦╚═╗
 # ╩ ╩╚═╝ ╩ ╚═╝╩╝╚╝═╩╝╩╝╚╝╚═╝╚═╝
@@ -90,11 +92,7 @@ bindkey "\e[3~" delete-char
 
 # Define a function to add 'sudo ' to the beginning of the current command line
 add_sudo() {
-    if [[ $BUFFER == "sudo "* ]]; then
-        BUFFER="${BUFFER#sudo }"
-    else
-        BUFFER="sudo $BUFFER"
-    fi
+    [[ $BUFFER == "sudo "* ]] && BUFFER="${BUFFER#sudo }" || BUFFER="sudo $BUFFER"
     zle end-of-line  # Move cursor to the end of the line after adding 'sudo '
 }
 zle -N add_sudo  # Associate function with a zle widget
@@ -106,12 +104,8 @@ bindkey "\`\`" add_sudo
 # ╠╩╗║║║║╠═╣╠╦╝║║╣ ╚═╗
 # ╚═╝╩╝╚╝╩ ╩╩╚═╩╚═╝╚═╝
 # Sourcing binary directories to load to $PATH
-if [ -d "$HOME/.local/bin" ] ; then 
-    PATH="$HOME/.local/bin:$PATH"
-fi
-if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-fi
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 # ┓ ┏┳┳┓  ┏┓┏┓┏┓┏┓┳┏┓┳┏┓
 # ┃┃┃┃┃┃  ┗┓┃┃┣ ┃ ┃┣ ┃┃ 
@@ -132,13 +126,9 @@ esac
 # ╩ ╩╩═╝╩╩ ╩╚═╝╚═╝╚═╝
 source "$ZSHDIR/aliases.zsh"
 # check if wireguard is installed, then source the aliases
-if which wg > /dev/null 2>&1; then
-    source "$ZSHDIR/wireguard.zsh"
-fi
+which wg > /dev/null 2>&1 && source "$ZSHDIR/wireguard.zsh"
 # check if pacman is installed, then source the aliases
-if which pacman > /dev/null 2>&1; then
-    source "$ZSHDIR/pacman.zsh"
-fi
+which pacman > /dev/null 2>&1 && source "$ZSHDIR/pacman.zsh"
 
 # ╔═╗╔╦╗╔╦╗
 # ║  ║║║ ║║
@@ -154,7 +144,7 @@ precmd() {
 eval "$(starship init zsh)"
 source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
 eval "$(atuin init zsh)"
 
 # ┏┓┓┏┏┓  ┏┓┏┓┳┓┳┓┳┏┓┏┓
