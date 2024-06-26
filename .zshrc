@@ -153,9 +153,9 @@ precmd() {
 # ╦╔╗╔╦╔╦╗╦╔═╗╦  ╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔
 # ║║║║║ ║ ║╠═╣║  ║╔═╝╠═╣ ║ ║║ ║║║║
 # ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 source $ZSH/oh-my-zsh.sh
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
 eval "$(atuin init zsh)"
 
