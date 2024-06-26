@@ -20,7 +20,7 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSPLUG/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
-    git clone https://github.com/Aloxaf/fzf-tab $OMZ_CUSPLUG/fzf-tab
+    # git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
     clear
 fi
 
