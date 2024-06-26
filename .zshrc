@@ -8,19 +8,18 @@
 # github.com/thelazt16
 # Figlet font: ANSI Shadow, Calvin S, tmplr
 
-# ┏┓┓┏┏┓  ┏┓┏┓┳┓┳┓┳┏┓┏┓
-# ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
-# ┗┛┗┛┗┛  ┗┛┛┗┛┗┻┛┻┗┛┗┛
-# Last but not least, UNLEASH the eye candies
-$HOME/bin/colorscript -r
-fortune
+# Tested out same config with omz, zinit, and zplug
+# OMZ > ZINIT > ZPLUG
+# OMZ came out on top at ~250ms, zinit ~500ms, zplug ~270ms
+# Using zinit ice (turbo mode) on all plugin, zinit could reach ~225ms
+# Although with ice the plugin isn't activated at prompt creation but at the next cmd
+# Which means, if you ice completions, it won't activate until next cmd
+# With 3 essential plugin from zsh-user, zinit ice load at ~250ms
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# For checking how fast the prompt open
+# start_time=$(date +%s%3N)
+# zmodload zsh/zprof
+
 
 # ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗╦ ╦╔═╗
 # ║ ║║║║╔═╝  ╚═╗║╣  ║ ║ ║╠═╝
@@ -35,14 +34,13 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
     git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $OMZ_CUSPLUG/zsh-you-should-use
     clear
 fi
 
 # ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╦ ╦╦═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
 # ║ ║║║║╔═╝  ║  ║ ║║║║╠╣ ║║ ╦║ ║╠╦╝╠═╣ ║ ║║ ║║║║╚═╗
 # ╚═╝╩ ╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-ZSH_THEME="powerlevel10k/powerlevel10k" # Uncomment if not using starship
 plugins=(
     bgnotify
     colored-man-pages
@@ -54,12 +52,18 @@ plugins=(
     zsh-autosuggestions
     zsh-completions
     zsh-syntax-highlighting
-    zsh-interactive-cd
+    zsh-you-should-use
 )
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
-# zstyle ':omz:plugins:nvm' lazy yes
-# zstyle ':omz:plugins:nvm' lazy-cmd node
+
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' lazy-cmd node
+zstyle ':omz:plugins:colored-man-pages' lazy yes
+zstyle ':omz:plugins:command-not-found' lazy yes
+zstyle ':omz:plugins:git' lazy yes
+zstyle ':omz:plugins:bgnotify' lazy yes
+zstyle ':omz:plugins:thefuck' lazy yes
 
 # ╔╗ ╔═╗╔═╗╦╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╔═╗
 # ╠╩╗╠═╣╚═╗║║    ║  ║ ║║║║╠╣ ║║ ╦╚═╗
@@ -165,15 +169,25 @@ precmd() {
     source "$ZSHDIR/aliases.zsh"
 }
 
-# ╦╔╗╔╦╔╦╗╦╔═╗╦  ╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔
-# ║║║║║ ║ ║╠═╣║  ║╔═╝╠═╣ ║ ║║ ║║║║
-# ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝
-# eval "$(starship init zsh)"
+# ╦╔╗╔╦╔╦╗╔═╗
+# ║║║║║ ║ ╚═╗
+# ╩╝╚╝╩ ╩ ╚═╝
+eval "$(starship init zsh)"
 source $ZSH/oh-my-zsh.sh
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 eval "$(atuin init zsh)"
 
+# ┏┓┓┏┏┓  ┏┓┏┓┳┓┳┓┳┏┓┏┓
+# ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
+# ┗┛┗┛┗┛  ┗┛┛┗┛┗┻┛┻┗┛┗┛
+# Last but not least, UNLEASH the eye candies
+$HOME/bin/colorscript -r
+fortune
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Check how fast the prompt open
+# end_time=$(date +%s%3N)
+# elapsed=$((end_time - start_time))
+# echo "Zsh startup time: ${elapsed} ms"
+
+# zprof
