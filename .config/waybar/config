@@ -1,0 +1,25 @@
+{
+  "include": "~/.config/waybar/modules",
+  "layer": "top",
+  "position": "top",
+  // "height": 28,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "margin-left": 8,
+  "margin-right": 8,
+  "margin-top": 4,
+  "margin-bottom": 4,
+  "spacing": 8,
+  "reload_style_on_change": true,
+  "modules-left": [
+    "custom/menu",
+    "temperature",
+    "cpu",
+    "memory",
+    "disk",
+    "hyprland/window"
+  ],
+  "modules-center": ["hyprland/workspaces#pacman"],
+  "modules-right": ["network#speed", "group/audio", "clock", "tray", "custom/swaync","group/tools"]
+}

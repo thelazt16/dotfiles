@@ -1,0 +1,49 @@
+/* Modified Tokyo Night */
+@define-color bg #1A1B26;
+@define-color fg #F1F1F1;
+@define-color mb #222330;
+
+@define-color red #f7768e;
+@define-color pink #FF0677;
+@define-color purple #583794;
+@define-color blue #7aa2f7;
+@define-color blue-arch #0A9CF5;
+@define-color cyan #7dcfff;
+@define-color teal #00B19F;
+@define-color green #9ece6a;
+@define-color lime #B9C244;
+@define-color yellow #e0af68;
+@define-color amber #FBC02D;
+@define-color orange #E57C46;
+@define-color brown #AC8476;
+@define-color grey #8C8C8C;
+@define-color indigo #6C77BB;
+@define-color blue-gray #6D8895;
+
+/* Catppuccin Mocha */
+@define-color cm-rosewater #f5e0dc;
+@define-color cm-flamingo #f2cdcd;
+@define-color cm-pink #f5c2e7;
+@define-color cm-mauve #cba6f7;
+@define-color cm-red #f38ba8;
+@define-color cm-maroon #eba0ac;
+@define-color cm-peach #fab387;
+@define-color cm-yellow #f9e2af;
+@define-color cm-green #a6e3a1;
+@define-color cm-teal #94e2d5;
+@define-color cm-sky #89dceb;
+@define-color cm-sapphire #74c7ec;
+@define-color cm-blue #89b4fa;
+@define-color cm-lavender #b4befe;
+@define-color cm-text #cdd6f4;
+@define-color cm-subtext1 #bac2de;
+@define-color cm-subtext0 #a6adc8;
+@define-color cm-overlay2 #9399b2;
+@define-color cm-overlay1 #7f849c;
+@define-color cm-overlay0 #6c7086;
+@define-color cm-surface2 #585b70;
+@define-color cm-surface1 #45475a;
+@define-color cm-surface0 #313244;
+@define-color cm-base #1e1e2e;
+@define-color cm-mantle #181825;
+@define-color cm-crust #11111b;

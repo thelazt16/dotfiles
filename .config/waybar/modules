@@ -1,0 +1,303 @@
+{
+  // PACMAN Style
+  "hyprland/workspaces#pacman": {
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{icon}",
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "show-special": false,
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": []
+    },
+    "format-icons": {
+      "active": "<span font='12'>󰮯</span>",
+      "empty": "<span font='6'></span>",
+      "default": "<span font='12'>󰊠</span>"
+    }
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 100,
+    "separate-outputs": true,
+    "offscreen-css": true,
+    "offscreen-css-text": "(inactive)",
+    "rewrite": {
+      "(.*) — Mozilla Firefox": "  $1",
+      "(.*) - fish": "  $1",
+      "(.*) - zsh": "  $1",
+      "(.*) - $term": "  $1 ",
+      "Alacritty": "  $0 ",
+      "(.*) - Thunar": "󰉋  $1",
+      "(.*) - Visual Studio Code": "󰨞  $1",
+      "(.*) - mpv": "  $1",
+      "SMPlayer": "  $0"
+    }
+  },
+  "group/mobo_drawer": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "cpu",
+      "transition-left-to-right": true
+    },
+    "modules": ["temperature", "cpu", "memory", "disk"]
+  },
+  "cpu": {
+    "format": "<span color='#00B19F'>󰍛</span> {usage}%",
+    "interval": 1,
+    "format-alt-click": "click",
+    "format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 󰍛",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "on-click-right": "gnome-system-monitor"
+  },
+  "memory": {
+    "interval": 10,
+    "format": "<span color='#e0af68'> </span> {used:0.1f}G",
+    "format-alt": "<span color='#e0af68'> </span> {percentage}%",
+    "format-alt-click": "click",
+    "tooltip": true,
+    "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+    "on-click-right": "kitty --title btop sh -c 'btop'"
+  },
+  "disk": {
+    "interval": 30,
+    //"format": "󰋊",
+    "path": "/",
+    //"format-alt-click": "click",
+    "format": "<span color='#7dcfff'>󰋊 </span>{percentage_used}%",
+    //"tooltip": true,
+    "tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)"
+  },
+  "temperature": {
+    "interval": 10,
+    "tooltip": true,
+    "hwmon-path": [
+      "/sys/class/hwmon/hwmon1/temp1_input",
+      "/sys/class/thermal/thermal_zone0/temp"
+    ],
+    //"thermal-zone": 0,
+    "critical-threshold": 82,
+    "format-critical": "{icon} {temperatureC}°C",
+    "format": "<span color='#FF0677'>{icon}</span> {temperatureC}°C",
+    "format-icons": ["󰈸"],
+    "on-click-right": "kitty --title nvtop sh -c 'nvtop'"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "<span font='12'> </span>",
+      "deactivated": "<span font='12'> </span>"
+    }
+  },
+  "group/audio": {
+    "orientation": "inherit",
+    "modules": [
+      "pulseaudio#soundicon",
+      "pulseaudio#sound",
+      "pulseaudio#microphone"
+    ]
+  },
+
+  "pulseaudio": {
+    "format": "<span color='#0A9CF5'>{icon}</span>  {volume}%",
+    "format-bluetooth": "<span color='#0A9CF5'>{icon}</span> 󰂰 {volume}%",
+    "format-muted": "<span color='#8C8C8C'>󰖁</span>",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", "󰕾", ""],
+      "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "scroll-step": 5.0,
+    "on-click": "~/.config/hypr/scripts/audioControl vol mute",
+    "on-click-right": "pavucontrol -t 3",
+    "on-scroll-up": "~/.config/hypr/scripts/audioControl vol up",
+    "on-scroll-down": "~/.config/hypr/scripts/audioControl vol down",
+    "tooltip-format": "{icon} {desc} | {volume}%",
+    "smooth-scrolling-threshold": 1
+  },
+  "pulseaudio#sound": {
+    "format": "{volume}%",
+    "format-bluetooth": "<span color='#0A9CF5'>{icon}</span> 󰂰 {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", "󰕾", ""],
+      "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "scroll-step": 5.0,
+    "on-click": "~/.config/hypr/scripts/audioControl vol mute",
+    "on-click-right": "pavucontrol -t 3",
+    "on-scroll-up": "~/.config/hypr/scripts/audioControl vol up",
+    "on-scroll-down": "~/.config/hypr/scripts/audioControl vol down",
+    "tooltip-format": "{icon} {desc} | {volume}%",
+    "smooth-scrolling-threshold": 1
+  },
+  "pulseaudio#soundicon": {
+    "format": "<span color='#0A9CF5'>{icon}</span>",
+    "format-bluetooth": "<span color='#0A9CF5'>{icon}</span> 󰂰 {volume}%",
+    "format-muted": "<span color='#8C8C8C'>󰖁</span>",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", "󰕾", ""],
+      "ignored-sinks": ["Easy Effects Sink"]
+    },
+    "scroll-step": 5.0,
+    "on-click": "~/.config/hypr/scripts/audioControl vol mute",
+    "on-click-right": "pavucontrol -t 3",
+    "on-scroll-up": "~/.config/hypr/scripts/audioControl vol up",
+    "on-scroll-down": "~/.config/hypr/scripts/audioControl vol down",
+    "tooltip-format": "{icon} {desc} | {volume}%",
+    "smooth-scrolling-threshold": 1
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "<span color='#B9C244'></span> {volume}%",
+    "format-source-muted": "<span color='#8C8C8C'></span>",
+    "on-click": "~/.config/hypr/scripts/audioControl mic mute",
+    "on-click-right": "pavucontrol -t 4",
+    "on-scroll-up": "~/.config/hypr/scripts/audioControl mic up",
+    "on-scroll-down": "~/.config/hypr/scripts/audioControl mic down",
+    "tooltip-format": "{source_desc} | {source_volume}%",
+    "scroll-step": 5
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 8
+  },
+  "wireplumber": {
+    "format": "{icon} {volume} %",
+    "format-muted": " Mute",
+    "on-click": "~/.config/hypr/scripts/Volume.sh --toggle",
+    "on-click-right": "pavucontrol -t 3",
+    "on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
+    "on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
+    "format-icons": ["", "", "󰕾", ""]
+  },
+  "clock": {
+    //"format": " {:%I:%M %p}", // AM PM format
+    "format": "<span color='#00B19F'> </span> {:%A, %b %d <span color='#FBC02D'> </span>  %I:%M %p}", // 24H
+    // "format-alt": "{:%A  |  %H:%M  |  %e %B}",
+    "tooltip-format": "<span background='#1A1B26'><tt><big>{calendar}</big></tt></span>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      // "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#F1F1F1'><b>{}</b></span>",
+        "days": "<span color='#F1F1F1'><b>{}</b></span>",
+        "weeks": "<span color='#7aa2f7'><b>W{}</b></span>",
+        "weekdays": "<span color='#F1F1F1'><b>{}</b></span>",
+        "today": "<span background='#e0af68' color='#1A1B26'><b>{}</b></span>"
+      }
+    }
+  },
+  "custom/power": {
+    "format": "⏻ ",
+    "on-click": "wlogout",
+    "tooltip": true,
+    "tooltip-format": "Left Click: Logout Menu"
+  },
+  "custom/swaync": {
+    "tooltip": true,
+    "tooltip-format": "Left Click: Launch Notification Center\nRight Click: Do not Disturb",
+    "format": "{icon} {}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "sleep 0.1 && swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  // NOTE:! This is only for Arch and Arch Based Distros  depend: pacman-contrib
+  "custom/updater": {
+    "format": "<span color='#f7768e'> </span> {}",
+    "exec": "checkupdates | wc -l",
+    "exec-if": "[[ $(checkupdates | wc -l) ]]",
+    "interval": 60,
+    // "on-click": "kitty --title kittyupdate -e yay -Syyu --noconfirm --removemake --answerupgrade y --noanswerclean --noanswerdiff --noansweredit --overwrite && notify-send 'The system has been updated'",
+    "on-click": "kitty --title kittyupdate -e yay -Syyu --noconfirm --removemake --answerupgrade y --overwrite && notify-send 'The system has been updated'",
+    "tooltip": true,
+    "tooltip-format": "Left Click: Update System\nArch Linux Only"
+  },
+  "network#speed": {
+    "interval": 1,
+    "format": "{ifname}",
+    "format-wifi": "{icon}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "format-ethernet": "<span color='#9ece6a'> </span> {bandwidthDownBytes}",
+    // "format-ethernet": "󰌘   {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "format-disconnected": "󰌙",
+    "tooltip-format": "{ipaddr}",
+    "format-linked": "󰈁 {ifname} (No IP)",
+    "tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+    "tooltip-format-ethernet": "{ifname} 󰌘",
+    "tooltip-format-disconnected": "󰌙 Disconnected",
+    "max-length": 50,
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+  },
+  "custom/lock": {
+    "format": "󰌾",
+    "on-click": "hyprlock",
+    "on-click-right": "pidof -q -x \"sleepIn\" && (pkill sleepIn && notify-send -u low -a sleep -i sleep -h string:x-canonical-private-synchronous:sleep  \"sleepIn canceled\") || ~/.config/hypr/scripts/sleepIn sleep 60",
+    "tooltip": true,
+    "tooltip-format": "󰷛 Screen Lock"
+  },
+  "custom/menu": {
+    "format": "<span font='12'></span>",
+    "on-click": "pkill rofi || rofi -show drun -theme \"$HOME\"/.config/bspwm/scripts/Launcher.rasi",
+    // "on-click-middle": "~/.config/hypr/UserScripts/WallpaperSelect.sh",
+    // "on-click-right": "~/.config/hypr/scripts/WaybarLayout.sh",
+    "tooltip": true,
+    "tooltip-format": "Left Click: Rofi Menu\nMiddle Click: Wallpaper Menu\nRight Click: Waybar Layout Menu"
+  },
+  "group/tools": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "custom/power",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/power",
+      // "tray",
+      "custom/updater",
+      "idle_inhibitor",
+      "custom/lock"
+    ]
+  }
+}
