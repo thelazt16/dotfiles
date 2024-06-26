@@ -1,0 +1,12 @@
+Type=X-GNOME-Metatheme
+[Desktop Entry]
+Name=Tokyonight-Purple-Dark
+Comment=An Flat Gtk+ theme based on Elegant Design
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Tokyonight-Purple-Dark
+MetacityTheme=Tokyonight-Purple-Dark
+IconTheme=Tela-circle-Dark
+CursorTheme=Tokyonight-cursors
+ButtonLayout=close,minimize,maximize:menu
