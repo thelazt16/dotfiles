@@ -20,6 +20,7 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSPLUG/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
+    git clone https://github.com/Aloxaf/fzf-tab $OMZ_CUSPLUG/fzf-tab
     clear
 fi
 
@@ -31,6 +32,7 @@ plugins=(
     bgnotify
     colored-man-pages
     command-not-found
+    fzf-tab
     git
     nvm
     thefuck
@@ -57,20 +59,15 @@ SAVEHIST=10000
 export EDITOR='code'
 export BROWSER='firefox'
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
+git clone https://github.com/Aloxaf/fzf-tabious events
+setopt LIST_PACKED		    # The completion menu takes less space.
+setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
+setopt PROMPT_SUBST         # enable command substitution in prompt
+setopt SHAREHISTORY         # share history to other prompt right away not at launch
 
-# ╔═╗╔═╗╦ ╦  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-# ╔═╝╚═╗╠═╣  ║ ║╠═╝ ║ ║║ ║║║║╚═╗
-# ╚═╝╚═╝╩ ╩  ╚═╝╩   ╩ ╩╚═╝╝╚╝╚═╝
-# ZSH cool options to make your life easier
-setopt AUTOCD              # change directory just by typing its name
-setopt PROMPT_SUBST        # enable command substitution in prompt
-setopt MENU_COMPLETE       # Automatically highlight first element of completion menu
-setopt LIST_PACKED		   # The completion menu takes less space.
-setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
-setopt HIST_IGNORE_DUPS	   # Do not write events to history that are duplicates of previous events
-setopt HIST_FIND_NO_DUPS   # When searching history don't display results already cycled through twice
-setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
-
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no 
 # ╦╔═╔═╗╦ ╦╔╗ ╦╔╗╔╔╦╗╦╔╗╔╔═╗╔═╗
 # ╠╩╗║╣ ╚╦╝╠╩╗║║║║ ║║║║║║║ ╦╚═╗
 # ╩ ╩╚═╝ ╩ ╚═╝╩╝╚╝═╩╝╩╝╚╝╚═╝╚═╝
@@ -109,8 +106,8 @@ bindkey "\`\`" add_sudo
 # ╠╩╗║║║║╠═╣╠╦╝║║╣ ╚═╗
 # ╚═╝╩╝╚╝╩ ╩╩╚═╩╚═╝╚═╝
 # Sourcing binary directories to load to $PATH
-if [ -d "$HOME/.local/bin" ] ;
-    then PATH="$HOME/.local/bin:$PATH"
+if [ -d "$HOME/.local/bin" ] ; then 
+    PATH="$HOME/.local/bin:$PATH"
 fi
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
