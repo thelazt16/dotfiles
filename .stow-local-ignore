@@ -20,6 +20,8 @@ misc
 .+~ # emacs backup files
 \#.\*\# # emacs autosave files
 
+^README
+README.md
 ^/README._
 ^/LICENSE._
 ^/COPYING

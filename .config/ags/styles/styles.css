@@ -1,0 +1,175 @@
+@import "catppuccin-mocha.css";
+window.bar {
+	background-color: @base;
+	color: white;
+	font-size: 13px;
+}
+
+.bar-window {
+	margin: 2px 0;
+}
+
+button {
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+}
+
+.os-icon {
+	font-size: 20px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+button:hover.os-icon {
+	background-color: transparent;
+}
+
+.outer-workspace {
+	background-color: rgba(255, 255, 255, 0.05);
+	border-radius: 20px;
+	margin: 2px;
+	padding: 2px 0px;
+}
+
+.workspace {
+	background-color: rgba(255, 255, 255, 0.15);
+	padding: 0;
+}
+
+.workspace button {
+	background-color: transparent;
+	padding: 0px 6px;
+}
+
+.workspace.first {
+	border-radius: 20px 0 0 20px;
+}
+.workspace.last {
+	border-radius: 0 20px 20px 0;
+}
+
+.workspace.normal,
+.workspace button.normal {
+	background-color: transparent;
+	color: @;
+}
+
+.workspace button.normal:hover {
+	border-radius: 20px;
+	background-color: rgba(200, 62, 255, 1);
+	color: @base;
+}
+
+.workspace button.focused {
+	background-color: @mauve;
+	color: @base;
+	font-weight: bold;
+	border-radius: 20px;
+}
+
+.workspace button.focused:hover {
+	border-radius: 20px;
+	color: @mauve;
+	background-color: @base;
+}
+
+.workspace button.occupied {
+	color: @mauve;
+}
+
+.workspaces button.occupied:hover {
+	border-radius: 20px;
+	background-color: @mauve;
+	color: @base;
+}
+
+.workspace.occupied-single {
+	border-radius: 20px;
+}
+
+.workspace.occupied-start {
+	border-radius: 20px 0 0 20px;
+}
+
+.workspace.occupied-middle {
+	border-radius: 0px;
+}
+
+.workspace.occupied-end {
+	border-radius: 0px 20px 20px 0px;
+}
+
+.active-client {
+	color: @mauve;
+	padding: 0 32px;
+	border-radius: 8px;
+}
+
+.client button {
+	padding: 0px 10px;
+	margin: 4px 0;
+	font-size: 18px;
+}
+
+.client button:hover {
+	background-color: @mauve;
+}
+
+.box {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	margin: 4px 0;
+	padding: 0px 16px;
+}
+
+.time {
+	font-size: 16px;
+	color: @mauve;
+}
+
+.date {
+	font-size: 12px;
+	color: @mauve;
+}
+
+.icon {
+	font-size: 14px;
+}
+
+.tray-icon {
+	font-size: 24px;
+	padding: 4px;
+}
+
+.volume-icon-muted {
+	color: @base;
+}
+
+.volume {
+	color: @white;
+}
+
+.critical {
+	color: @red;
+}
+
+.high {
+	color: @peach;
+}
+
+.medium-high {
+	color: @yellow;
+}
+
+.medium {
+	color: @teal;
+}
+
+.low {
+	color: @green;
+}
+
+.disabled {
+	color: gray;
+}

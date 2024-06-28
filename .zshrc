@@ -20,6 +20,19 @@
 # start_time=$(date +%s%3N)
 # zmodload zsh/zprof
 
+# ┏┓┓┏┏┓  ┏┓┏┓┳┓┳┓┳┏┓┏┓
+# ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
+# ┗┛┗┛┗┛  ┗┛┛┗┛┗┻┛┻┗┛┗┛
+# Enable here if use p10k
+# $HOME/bin/colorscript -r
+# fortune
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╦╗╦ ╦╔═╗
 # ║ ║║║║╔═╝  ╚═╗║╣  ║ ║ ║╠═╝
@@ -35,12 +48,14 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
     git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
     git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $OMZ_CUSPLUG/zsh-you-should-use
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     clear
 fi
 
 # ╔═╗╔╦╗╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╦ ╦╦═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
 # ║ ║║║║╔═╝  ║  ║ ║║║║╠╣ ║║ ╦║ ║╠╦╝╠═╣ ║ ║║ ║║║║╚═╗
 # ╚═╝╩ ╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
     bgnotify
     colored-man-pages
@@ -173,11 +188,11 @@ precmd() {
 # ║║║║║ ║ ╚═╗
 # ╩╝╚╝╩ ╩ ╚═╝
 eval "$(starship init zsh)"
-# eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/ohmyposh.toml)"
 source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 eval "$(atuin init zsh)"
+# eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/ohmyposh.toml)"
 
 # ┏┓┓┏┏┓  ┏┓┏┓┳┓┳┓┳┏┓┏┓
 # ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
@@ -192,3 +207,8 @@ fortune
 # echo "Zsh startup time: ${elapsed} ms"
 
 # zprof
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+PATH=~/.console-ninja/.bin:$PATH

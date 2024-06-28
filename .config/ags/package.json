@@ -1,0 +1,25 @@
+{
+  "name": "thelazt16-hypr",
+  "version": "0.0.1",
+  "description": "ags configuration for hyprland",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/thelazt16/hyprdots"
+  },
+  "keywords": [
+    "ags",
+    "gtk-shell",
+    "hyprland"
+  ],
+  "author": "thelazt16",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@eslint/js": "^9.4.0",
+    "eslint": "^9.4.0",
+    "globals": "^15.3.0"
+  }
+}

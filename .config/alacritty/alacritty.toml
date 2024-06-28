@@ -2,6 +2,8 @@ live_config_reload = true
 working_directory = "None"
 
 import = [ "~/.config/alacritty/tokyo-night.toml" ]
+# import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
+
 
 [window]
 dynamic_padding = false

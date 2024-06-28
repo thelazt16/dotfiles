@@ -14,6 +14,7 @@ application/x-extension-xht=firefox.desktop;
 video/x-matroska=smplayer.desktop;
 application/x-zerosize=code.desktop;
 image/png=feh.desktop;
+image/svg+xml=code.desktop;
 
 [Default Applications]
 application/octet-stream=code.desktop
