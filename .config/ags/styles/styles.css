@@ -57,7 +57,7 @@ button:hover.os-icon {
 
 .workspace button.normal:hover {
 	border-radius: 20px;
-	background-color: rgba(200, 62, 255, 1);
+	background-color: @mauve;
 	color: @base;
 }
 
@@ -171,5 +171,66 @@ button:hover.os-icon {
 }
 
 .disabled {
-	color: gray;
+	color: @gray;
+}
+
+window.notification-popups box.notifications {
+	padding: 0.25em;
+}
+
+.notification-icon {
+	min-width: 64px;
+	min-height: 64px;
+	margin-left: 0.75em;
+}
+
+.notification-icon image {
+	font-size: 58px;
+	/* to center the icon */
+	margin: 5px;
+	color: @text;
+}
+
+.notification-icon box {
+	min-width: 64px;
+	min-height: 64px;
+	border-radius: 8px;
+}
+
+.notification {
+	min-width: 300px;
+	border-radius: 0 12px 0 12px;
+	padding: 0.75em 0.5em;
+	margin: 0.5em;
+	border-bottom: 6px solid @green;
+	background-color: @base;
+}
+
+.notification.critical {
+	border-bottom: 6px solid @red;
+}
+
+.notification-title {
+	color: @text;
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+.notification-body {
+	margin-top: 0.25em;
+	font-weight: 600;
+	color: @subtext1;
+}
+
+.notification-actions .notification-action {
+	margin: 0 0.4em;
+	margin-top: 0.8em;
+}
+
+.notification-actions .notification-action:first-child {
+	margin-left: 0;
+}
+
+.notification-actions .notification-action:last-child {
+	margin-right: 0;
 }
