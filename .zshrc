@@ -40,15 +40,22 @@
 # check if oh-my-zsh is installed, otherwise install it.
 export ZSH="$HOME/.oh-my-zsh"
 if [[ ! -d ~/.oh-my-zsh ]]; then
-    echo "oh-my-zsh not installed."
+    echo "\noh-my-zsh not installed. \n"
+    echo "Installing Oh-My-ZSH"
+    git clone https://github.com/ohmyzsh/ohmyzsh.git $ZSH 2> /dev/null && echo "Oh-My-ZSH was installed successfully" || echo "Failed to install Oh-My-ZSH"
     OMZ_CUSPLUG="$HOME/.oh-my-zsh/custom/plugins"
-    git clone https://github.com/ohmyzsh/ohmyzsh.git $ZSH
-    git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSPLUG/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-completions $OMZ_CUSPLUG/zsh-completions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSPLUG/zsh-syntax-highlighting
-    git clone git@github.com:Aloxaf/fzf-tab.git $OMZ_CUSPLUG/fzf-tab
-    git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $OMZ_CUSPLUG/zsh-you-should-use
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    CUSTOMPLUGINS=(
+        zsh-users/zsh-autosuggestions
+        zsh-users/zsh-completions
+        zsh-users/zsh-syntax-highlighting
+        Aloxaf/fzf-tab
+        MichaelAquilina/zsh-you-should-use
+    )
+    for CUSTOMPLUGIN in "${CUSTOMPLUGINS[@]}"; do
+        PLUGINPATH="$OMZ_CUSPLUG/${CUSTOMPLUGIN#*/}"
+        echo "\nInstalling ${CUSTOMPLUGIN#*/}"
+        git clone https://github.com/"$CUSTOMPLUGIN" "$PLUGINPATH" 2> /dev/null && echo "${CUSTOMPLUGIN#*/} was installed successfully" || echo "Failed to install ${CUSTOMPLUGIN#*/}"
+    done
     clear
 fi
 
@@ -72,11 +79,6 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
 zstyle ':omz:plugins:nvm' lazy yes
-zstyle ':omz:plugins:colored-man-pages' lazy yes
-zstyle ':omz:plugins:git' lazy yes
-zstyle ':omz:plugins:bgnotify' lazy yes
-zstyle ':omz:plugins:thefuck' lazy yes
-
 # ╔╗ ╔═╗╔═╗╦╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╔═╗
 # ╠╩╗╠═╣╚═╗║║    ║  ║ ║║║║╠╣ ║║ ╦╚═╗
 # ╚═╝╩ ╩╚═╝╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝
@@ -190,7 +192,7 @@ precmd() {
 eval "$(starship init zsh)"
 source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
-eval "$(fzf --zsh)"
+# eval "$(fzf --zsh)"
 eval "$(atuin init zsh)"
 # eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/ohmyposh.toml)"
 
@@ -210,5 +212,3 @@ fortune
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-PATH=~/.console-ninja/.bin:$PATH
