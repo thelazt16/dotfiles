@@ -1,4 +1,8 @@
 const notifications = await Service.import("notifications");
+notifications.popupTimeout = 5000;
+notifications.forceTimeout = false;
+notifications.cacheActions = false;
+notifications.clearDelay = 100;
 const { Box, Button, EventBox, Icon, Label, Window } = Widget;
 /** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} n */
 
@@ -23,7 +27,7 @@ const notificationIcon = ({ appEntry, appIcon, image }) => {
 	});
 };
 
-const notification = (n) => {
+const Notification = (n) => {
 	const icon = Box({
 		hpack: "end",
 		vpack: "center",
@@ -48,6 +52,7 @@ const notification = (n) => {
 		xalign: 1,
 		vpack: "center",
 		hexpand: true,
+		maxWidthChars: 50,
 		useMarkup: true,
 		justification: "left",
 		label: n.body,
@@ -88,12 +93,12 @@ const notification = (n) => {
 export const NotificationPopups = (monitor = 0) => {
 	const list = Box({
 		vertical: true,
-		children: notifications.popups.map(notification),
+		children: notifications.popups.map(Notification),
 	});
 
 	const onNotified = (_, /** @type {number} */ id) => {
 		const n = notifications.getNotification(id);
-		if (n) list.children = [notification(n), ...list.children];
+		if (n) list.children = [Notification(n), ...list.children];
 	};
 
 	const onDismissed = (_, /** @type {number} */ id) => {
@@ -108,9 +113,11 @@ export const NotificationPopups = (monitor = 0) => {
 		monitor,
 		name: `notifications${monitor}`,
 		className: "notification-popups",
+		hexpand: true,
+		vexpand: true,
 		anchor: ["top", "right"],
 		child: Box({
-			css: "min-width: 2px; min-height: 2px;",
+			css: "min-width: 2px; min-height: 2px",
 			className: "notifications",
 			vertical: true,
 			child: list,

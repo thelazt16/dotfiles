@@ -44,31 +44,22 @@ export const Workspaces = () => {
 
 				if (isOccupied || isActive) {
 					if (index === 0) box.toggleClassName("occupied-start", true);
-					else if (
-						index === 8 &&
-						previousWorkspace.className.indexOf("occupied-start") === -1
-					)
-						box.toggleClassName("occupied-single", true);
-					else if (
-						index === 8 &&
-						previousWorkspace.className.indexOf("occupied-middle") === -1
-					)
+					else if (previousWorkspace.className.includes("occupied-start")) {
 						box.toggleClassName("occupied-end", true);
-					else if (
-						previousWorkspace.className.indexOf("occupied-start") !== -1
-					) {
+					} else if (previousWorkspace.className.includes("occupied-end")) {
+						previousWorkspace.toggleClassName("occupied-end", false);
+						previousWorkspace.toggleClassName("occupied-middle", true);
 						box.toggleClassName("occupied-end", true);
 					} else if (
-						previousWorkspace.className.indexOf("occupied-end") !== -1
-					) {
-						previousWorkspace.toggleClassName("occupied-middle", true);
-						previousWorkspace.toggleClassName("occupied-end", false);
-						box.toggleClassName("occupied-end", true);
-					} else {
+						index === 8 &&
+						!previousWorkspace.className.includes("occupied-start")
+					)
+						box.toggleClassName("occupied-single", true);
+					else {
 						box.toggleClassName("occupied-start", true);
 					}
 				} else {
-					if (previousWorkspace.className.indexOf("occupied-start") !== -1) {
+					if (previousWorkspace.className.includes("occupied-start")) {
 						previousWorkspace.toggleClassName("occupied-start", false);
 						previousWorkspace.toggleClassName("occupied-single", true);
 					}
