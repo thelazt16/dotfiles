@@ -49,6 +49,7 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
         zsh-users/zsh-completions
         zsh-users/zsh-syntax-highlighting
         Aloxaf/fzf-tab
+        MichaelAquilina/zsh-auto-notify
         MichaelAquilina/zsh-you-should-use
     )
     for CUSTOMPLUGIN in "${CUSTOMPLUGINS[@]}"; do
@@ -56,6 +57,8 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
         echo "\nInstalling ${CUSTOMPLUGIN#*/}"
         git clone https://github.com/"$CUSTOMPLUGIN" "$PLUGINPATH" 2> /dev/null && echo "${CUSTOMPLUGIN#*/} was installed successfully" || echo "Failed to install ${CUSTOMPLUGIN#*/}"
     done
+    # For some stupid plugins whose .zsh file difference from the f*cking repo name
+    git clone https://github.com/MichaelAquilina/zsh-auto-notify $OMZ_CUSPLUG/auto-notify
     clear
 fi
 
@@ -64,12 +67,10 @@ fi
 # ╚═╝╩ ╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
-    bgnotify
-    colored-man-pages
-    fzf-tab
-    git
+    # git
     nvm
-    thefuck
+    auto-notify
+    fzf-tab
     zsh-autosuggestions
     zsh-completions
     zsh-syntax-highlighting
