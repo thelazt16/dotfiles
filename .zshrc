@@ -54,11 +54,12 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     )
     for CUSTOMPLUGIN in "${CUSTOMPLUGINS[@]}"; do
         PLUGINPATH="$OMZ_CUSPLUG/${CUSTOMPLUGIN#*/}"
+
+        # For some stupid plugins whose .zsh file different from the f*cking repo name
+        [[ "${CUSTOMPLUGIN#*/}" == "zsh-auto-notify" ]] && PLUGINPATH="$OMZ_CUSPLUG/auto-notify"
         echo "\nInstalling ${CUSTOMPLUGIN#*/}"
         git clone https://github.com/"$CUSTOMPLUGIN" "$PLUGINPATH" 2> /dev/null && echo "${CUSTOMPLUGIN#*/} was installed successfully" || echo "Failed to install ${CUSTOMPLUGIN#*/}"
     done
-    # For some stupid plugins whose .zsh file difference from the f*cking repo name
-    git clone https://github.com/MichaelAquilina/zsh-auto-notify $OMZ_CUSPLUG/auto-notify
     clear
 fi
 
