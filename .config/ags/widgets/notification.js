@@ -29,7 +29,7 @@ const notificationIcon = ({ appEntry, appIcon, image }) => {
 
 const Notification = (n) => {
 	const icon = Box({
-		hpack: "end",
+		hpack: "center",
 		vpack: "center",
 		className: "notification-icon",
 		child: notificationIcon(n),
@@ -37,11 +37,13 @@ const Notification = (n) => {
 
 	const notificationTitle = Label({
 		className: "notification-title",
-		xalign: 1,
+		xalign: 0,
+		vpack: "center",
 		justification: "left",
-		hexpand: true,
-		maxWidthChars: 24,
 		truncate: "end",
+		hexpand: true,
+		vexpand: true,
+		maxWidthChars: 24,
 		wrap: true,
 		label: n.summary,
 		useMarkup: true,
@@ -50,12 +52,13 @@ const Notification = (n) => {
 	const notificationBody = Label({
 		className: "notification-body",
 		xalign: 1,
-		vpack: "center",
-		hexpand: true,
-		maxWidthChars: 50,
-		useMarkup: true,
+		hpack: "start",
+		vpack: "start",
 		justification: "left",
-		label: n.body,
+		// truncate: "end",
+		useMarkup: true,
+		vexpand: true,
+		label: n.body.split(" ").slice(0, 50).join(" "),
 		wrap: true,
 	});
 
@@ -84,7 +87,14 @@ const Notification = (n) => {
 				className: `notification ${n.urgency}`,
 				vertical: true,
 			},
-			Box([Box({ vertical: true }, notificationTitle, notificationBody), icon]),
+			Box([
+				icon,
+				Box(
+					{ vertical: true, vexpand: true, hexpand: true },
+					notificationTitle,
+					notificationBody
+				),
+			]),
 			notificationActions
 		)
 	);
@@ -117,9 +127,11 @@ export const NotificationPopups = (monitor = 0) => {
 		vexpand: true,
 		anchor: ["top", "right"],
 		child: Box({
-			css: "min-width: 2px; min-height: 2px",
+			css: "min-width: 100px; min-height: 100px",
 			className: "notifications",
 			vertical: true,
+			hexpand: true,
+			vexpand: true,
 			child: list,
 
 			/** this is a simple one liner that could be used instead of

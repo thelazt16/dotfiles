@@ -6,7 +6,7 @@ export const SysTray = () => {
 		items.map((item) =>
 			Button({
 				className: "tray-icon icon",
-				child: Icon({ icon: item.bind("icon") }),
+				child: Icon({ icon: item.bind("icon"), size: 16 }),
 				on_primary_click: (_, event) => item.activate(event),
 				on_secondary_click: (_, event) => item.openMenu(event),
 				tooltip_markup: item.bind("tooltip_markup"),
@@ -15,6 +15,7 @@ export const SysTray = () => {
 	);
 
 	return Box({
+		className: "tray-box",
 		children: items,
 	});
 };

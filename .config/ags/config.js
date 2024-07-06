@@ -1,5 +1,5 @@
 import { Bar } from "./widgets/bar.js";
-import { NotificationPopups } from "./widgets/notification.js";
+// import { NotificationPopups } from "./widgets/notification.js";
 import { debug } from "./debug.js";
 
 // debug.hypr();
@@ -15,7 +15,7 @@ App.config({
 	iconTheme: "Papirus-Dark",
 	windows: [
 		Bar(),
-		NotificationPopups(),
+		// NotificationPopups(),
 
 		// you can call it, for each monitor
 		// Bar(0),

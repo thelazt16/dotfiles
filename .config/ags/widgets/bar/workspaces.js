@@ -44,9 +44,9 @@ export const Workspaces = () => {
 
 				if (isOccupied || isActive) {
 					if (index === 0) box.toggleClassName("occupied-start", true);
-					else if (previousWorkspace.className.includes("occupied-start")) {
+					else if (previousWorkspace.className.includes("occupied-start"))
 						box.toggleClassName("occupied-end", true);
-					} else if (previousWorkspace.className.includes("occupied-end")) {
+					else if (previousWorkspace.className.includes("occupied-end")) {
 						previousWorkspace.toggleClassName("occupied-end", false);
 						previousWorkspace.toggleClassName("occupied-middle", true);
 						box.toggleClassName("occupied-end", true);
@@ -55,9 +55,7 @@ export const Workspaces = () => {
 						!previousWorkspace.className.includes("occupied-start")
 					)
 						box.toggleClassName("occupied-single", true);
-					else {
-						box.toggleClassName("occupied-start", true);
-					}
+					else box.toggleClassName("occupied-start", true);
 				} else {
 					if (previousWorkspace.className.includes("occupied-start")) {
 						previousWorkspace.toggleClassName("occupied-start", false);

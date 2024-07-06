@@ -16,7 +16,7 @@ export const getIcon = (
 		kittyupdate: "kitty",
 		"code-url-handler": "vscode",
 		kvantummanager: "kvantum",
-		rofi: "search-symbolic",
+		Rofi: "kappfinder",
 		workspace: "vokoscreen",
 	};
 
@@ -44,6 +44,9 @@ export const getIcon = (
 			.replace(/ /g, "-")}-symbolic`;
 		icon = lookUpIcon(formattedClientTitle);
 		if (icon) iconName = formattedClientTitle;
+	}
+	if (!icon) {
+		iconName = "xfce-unknown";
 	}
 
 	return Icon({ icon: iconName, css: `opacity: ${clientOpacity}` });
