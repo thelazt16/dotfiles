@@ -7,7 +7,8 @@ window.bar {
 }
 
 .bar-window {
-	margin: 2px 0;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 button {
@@ -17,7 +18,7 @@ button {
 }
 
 .os-icon {
-	font-size: 20px;
+	font-size: 1.5em;
 	padding-left: 8px;
 	padding-right: 8px;
 }
@@ -26,21 +27,22 @@ button:hover.os-icon {
 	background-color: transparent;
 }
 
-.outer-workspace {
-	background-color: rgba(255, 255, 255, 0.05);
-	border-radius: 20px;
-	margin: 2px;
-	padding: 2px 0px;
-}
-
 .workspace {
 	background-color: rgba(255, 255, 255, 0.15);
-	padding: 0;
+	/* padding: 0; */
+}
+
+.outer-workspace {
+	background-color: rgba(255, 255, 255, 0.075);
+	border-radius: 20px;
+	margin: 2px;
+	padding: 2px;
 }
 
 .workspace button {
 	background-color: transparent;
-	padding: 0px 6px;
+	padding-left: 6px;
+	padding-right: 6px;
 }
 
 .workspace.first {
@@ -53,7 +55,7 @@ button:hover.os-icon {
 .workspace.normal,
 .workspace button.normal {
 	background-color: transparent;
-	color: @;
+	color: @base;
 }
 
 .workspace button.normal:hover {
@@ -105,14 +107,17 @@ button:hover.os-icon {
 
 .active-client {
 	color: @mauve;
-	padding: 0 32px;
+	padding-left: 32px;
+	padding-right: 32px;
 	border-radius: 8px;
 }
 
 .client button {
-	padding: 0px 10px;
-	margin: 4px 0;
-	font-size: 18px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-size: 1.4em;
 }
 
 .client button:hover {
@@ -122,22 +127,26 @@ button:hover.os-icon {
 .box {
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 12px;
-	margin: 4px 0;
-	padding: 0px 16px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.date-time {
+	color: @mauve;
 }
 
 .time {
-	font-size: 16px;
-	color: @mauve;
+	font-size: 1.3em;
 }
 
 .date {
-	font-size: 12px;
-	color: @mauve;
+	font-size: 0.9em;
 }
 
 .icon {
-	font-size: 14px;
+	font-size: 1.1em;
 }
 
 .tray-icon {
@@ -148,7 +157,8 @@ button:hover.os-icon {
 .tray-box {
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 12px;
-	margin: 4px 0;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	padding-left: 12px;
 	padding-right: 12px;
 }
@@ -196,7 +206,7 @@ window.notification-popups box.notifications {
 }
 
 .notification-icon image {
-	font-size: 58px;
+	font-size: 4.5em;
 	/* to center the icon */
 	margin: 5px;
 	color: @text;
@@ -235,7 +245,8 @@ window.notification-popups box.notifications {
 }
 
 .notification-actions .notification-action {
-	margin: 0 0.4em;
+	margin-right: 0.4em;
+	margin-left: 0.4em;
 	margin-top: 0.8em;
 }
 

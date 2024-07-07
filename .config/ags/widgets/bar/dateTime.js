@@ -1,45 +1,68 @@
 const { Box, Label } = Widget;
+import { getHoliday } from "../../functions/getHoliday.js";
 
-// const getDate = Variable("", {
-//   poll: [1000, 'date "+%A, %b %d"'],
-// });
+const holiday = await Variable("", {
+	poll: [
+		3600000,
+		async () => {
+			return await getHoliday();
+		},
+	],
+});
 
-// const getTime = Variable("", {
-//   poll: [1000, 'date "+%H:%M:%S"'],
-// });
+const getDateTime = Variable(new Date(), {
+	poll: [
+		1000,
+		() => {
+			const currentDate = new Date();
+			const dayOfWeek = currentDate.getDay();
+			const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // 0 is Sunday, 6 is Saturday
+			// const isWeekend = false;
+
+			return {
+				date: `${currentDate.toLocaleDateString("en-US", {
+					weekday: "long",
+					// year: "numeric",
+					month: "short",
+					day: "numeric",
+				})}`,
+				time: `${currentDate.toLocaleTimeString([], {
+					hour: "2-digit",
+					minute: "2-digit",
+					hour12: true,
+				})}`,
+				isWeekend: isWeekend,
+			};
+		},
+	],
+});
 
 export const DateTime = () => {
-	const getDateTime = Variable("", {
-		poll: [
-			1000,
-			'date "+%A, %b %d-%I:%M %p"',
-			(out) => {
-				const splitDateTime = out.split("-");
-				const date = splitDateTime[0];
-				const time = splitDateTime[1];
-				return {
-					date: date,
-					time: time,
-				};
-			},
-		],
+	// print(JSON.stringify(holiday));
+	const dateLabel = Label({
+		class_name: "date",
+		hpack: "end",
+		label: getDateTime.value.date,
 	});
 
 	const timeLabel = Label({
-		class_name: "date",
-		hpack: "end",
-		label: getDateTime.bind().as((value) => `${value.date.toString()}`),
-	});
-
-	const dateLabel = Label({
 		className: "time",
 		hpack: "end",
-		label: getDateTime.bind().as((value) => value.time.toString()),
+		label: getDateTime.value.time,
 	});
 	return Box({
-		children: [dateLabel, timeLabel],
+		className: "date-time",
 		vexpand: true,
 		vertical: true,
 		hpack: "end",
+		setup: (self) => {
+			// print(JSON.stringify(getDateTime));
+			self.hook(getDateTime, () => {
+				holiday || getDateTime.value.isWeekend
+					? self.toggleClassName("critical", true)
+					: self.toggleClassName("critical", false);
+				self.children = [timeLabel, dateLabel];
+			});
+		},
 	});
 };
