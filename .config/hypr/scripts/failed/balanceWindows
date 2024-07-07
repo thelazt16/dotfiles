@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Get the list of windows in the current workspace
+windows=$(hyprctl clients -j | jq -r '.[] | select(.workspace == "current") | .address')
+
+# Calculate the number of windows
+num_windows=$(echo "$windows" | wc -l)
+
+# Calculate the new split ratio
+if [ "$num_windows" -gt 0 ]; then
+    new_ratio=$(echo "scale=2; 1.0 / $num_windows" | bc)
+else
+    new_ratio=1.0
+fi
+
+# Apply the new split ratio to each window
+for window in $windows; do
+    hyprctl dispatch splitratio $window $new_ratio
+done

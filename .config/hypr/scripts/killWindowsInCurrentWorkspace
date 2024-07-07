@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Get the current workspace ID
+workspace_id=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .activeWorkspace.id')
+
+# Get all window addresses in the current workspace
+window_addresses=$(hyprctl clients -j | jq -r --arg ws_id "$workspace_id" '.[] | select(.workspace.id == ($ws_id | tonumber)) | .address')
+
+# Loop through each window address and kill it
+for address in $window_addresses; do
+    hyprctl dispatch closewindow address:$address
+    sleep 0.05
+done
+
+notify-send -a dialog-information -i dialog-information-symbolic -h string:x-canonical-private-synchronous:killSameApps "Kill All Windows in Current Workspace" "Successfully killed all windows in current Workspace($workspace_id)"

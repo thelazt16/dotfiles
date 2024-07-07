@@ -1,0 +1,57 @@
+#!/bin/bash
+
+handlePlayback() {
+  status=$(playerctl status)
+  if [ "$status" == "Playing" ]; then
+    playerctl play-pause
+  fi
+}
+
+handleSleep() {
+  local type=$1
+  local valueInMinutes=${2:-60}
+  local valueInSeconds=$((valueInMinutes * 60))
+  local notification
+
+  case "$type" in
+    sleep)
+      notification="Sleeping"
+      COMMAND="systemctl suspend"
+      ;;
+    hibernate)
+      notification="Hibernating"
+      COMMAND="systemctl hibernate"
+      ;;
+    shutdown)
+      notification="Shutting down"
+      COMMAND="shutdown now"
+
+      ;;
+  esac
+  
+  notify-send -u low -a sleep -i "sleep" -h string:x-canonical-private-synchronous:sleep "$notification in $valueInMinutes minutes" 
+  sleep "$valueInSeconds"
+
+  case "$type" in
+    sleep|hibernate)
+      handlePlayback
+      sleep 1
+      ;;
+  esac
+  
+  eval "$COMMAND"
+
+}
+
+# Parse command-line arguments
+case "$1" in
+    sleep|hibernate|shutdown)
+        handleSleep "$1" "${2:-60}"
+        ;;
+    *)
+        echo "Usage: $0 {sleep|hibernate|shutdown} [value in minute]"
+        exit 1
+        ;;
+esac
+
+exit 0

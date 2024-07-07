@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Extract monitor name without the trailing colon
+monitor_name=$(hyprctl activeworkspace | grep "monitor" | awk '{ print $7 }' | sed 's/://')
+# monitor_name="DP-1"
+
+# echo "$monitor_name"
+# Get the JSON output from hyprctl
+json_monitors=$(hyprctl monitors -j)
+
+# Extract the disabled value using jq
+dpms=$(echo "$json_monitors" | jq -r --arg name "$monitor_name" '.[] | select(.name == $name) | .dpmsStatus')
+
+echo "$dpms"
+
+if [ "$dpms" == "true" ]; then
+  hyprctl keyword monitor "DP-1,2560x1440@165.00Hz,0x0,1"
+  hyprctl dispatch dpms on
+  return 1
+fi
+
+hyprctl dispatch dpms off

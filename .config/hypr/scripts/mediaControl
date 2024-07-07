@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# TODO: Add notification and maybe OSD with AGS
+handleMedia() {
+  local action=$1
+  case "$action" in
+    toggle)
+      playerctl play-pause
+      ;;
+    prev)
+      playerctl previous
+      ;;
+    next)
+      playerctl next
+      ;;
+    stop)
+      playerctl stop
+      ;;
+  esac
+}
+
+# Parse command-line arguments
+case "$1" in
+  toggle|prev|next|stop)
+    handleMedia "$1"
+    ;;
+  *)
+    echo "Invalid audio command: $1"
+    echo "Usage: $0 {toggle|prev|next|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

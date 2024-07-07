@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+
+class=$(hyprctl activewindow -j | jq -r '.class')
+
+# Get all window addresses in the current workspace
+window_addresses=$(hyprctl clients -j | jq -r --arg class_name "$class" '.[] | select(.class == $class_name) | .address')
+
+# Loop through each window address and kill it
+for address in $window_addresses; do
+    hyprctl dispatch closewindow address:$address
+done
+
+# Fallback
+# class_lowercase=${class,,}
+# pkill "$class"
+# pkill "$class_lowercase"
+
+notify-send -a dialog-information -i dialog-information-symbolic -h string:x-canonical-private-synchronous:killSameApps "Kill All $class" "Successfully killed all running $class"

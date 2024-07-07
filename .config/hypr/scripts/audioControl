@@ -1,0 +1,85 @@
+#!/bin/bash
+
+showNotification() {
+  local icon
+  local device
+  case "$1" in
+    vol)
+      icon="speaker"
+      device="Speaker"
+      ;;
+    mic)
+      icon="microphone"
+      device="Microphone"
+      ;;
+  esac
+  case "$2" in
+    up|down)
+      notify-send -e -u low -a "$device" -i "$icon" -h string:x-canonical-private-synchronous:volume -h "int:value:$3" "$device" "$device is $4 to $3" 
+      ;;
+    *mute*)
+      notify-send -e -u low -a "$device" -i "$icon" -h string:x-canonical-private-synchronous:volume -h "int:value:$3" "$device" "$device is $2" 
+      ;;
+  esac
+}
+
+handleAudio() {
+  local type=$1
+  local action=$2
+  local value=${3:-5}
+  local volume
+  local status
+  case "$type" in
+    vol)
+      COMMAND="pamixer"
+      ;;
+    mic)
+      COMMAND="pamixer --default-source"
+      ;;
+  esac
+  case "$action" in
+    up)
+      eval "$COMMAND" -u
+      eval "$COMMAND" -i "$value"
+      volume=$(eval "$COMMAND" --get-volume)
+      status="increased"
+      showNotification "$type" "$action" "$volume" "$status"
+      ;;
+    down)
+      eval "$COMMAND" -u
+      eval "$COMMAND" -d "$value"
+      volume=$(eval "$COMMAND" --get-volume)
+      status="increased"
+      showNotification "$type" "$action" "$volume" "$status"
+      ;;
+    mute)
+      muted=$(eval "$COMMAND" --get-mute)
+      if [ "$muted" == true ];then 
+        eval "$COMMAND" -u
+        volume=$(eval "$COMMAND" --get-volume)
+        showNotification "$type" "unmuted" "$volume"
+      else 
+        eval "$COMMAND" -m
+        showNotification "$type" "muted" "0"
+      fi
+  esac
+  playAudio
+}
+
+playAudio() {
+  paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+}
+
+# Parse command-line arguments
+case "$1" in
+  vol|mic)
+    handleAudio "$1" "$2" "$3"
+    ;;
+  *)
+    echo "Invalid audio command: $1"
+    echo "Usage: $0 {vol|mic} {up|down|mute} [value]"
+    exit 1
+    ;;
+esac
+
+exit 0

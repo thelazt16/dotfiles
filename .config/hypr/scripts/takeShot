@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# Directory where screenshots are saved
+SAVE_DIR="$HOME"/Pictures/Screenshots/
+
+# Ensure the save directory exists
+mkdir -p "$SAVE_DIR"
+
+# Function to take a screenshot
+take_screenshot() {
+    local type="$1"
+    local delay="${2:-0}"
+    local MODE
+
+    if [ "$delay" -eq 1 ]; then
+        notify-send "Taking screenshot in $delay second"
+    elif [ "$delay" -ne 0 ]; then
+        notify-send "Taking screenshot in $delay seconds"
+    fi
+    
+    # Add delay if provided
+    sleep "$delay"
+
+    # Determine the filename based on the type
+    case "$type" in
+        full)
+            TYPE="fullscreen"
+            MODE="active --mode output"
+            ;;
+        window)
+            TYPE="window"
+            MODE="window"
+            ;;
+        snip)
+            TYPE="snip"
+            MODE="region"
+            ;;
+        *)
+            echo "Unknown screenshot type: $type"
+            exit 1
+            ;;
+    esac
+
+    FILENAME="$(date +'%Y-%m-%d_%H-%M-%S')_$TYPE.png"
+    FILEPATH="$SAVE_DIR$FILENAME"
+    # echo "$FILEPATH"
+
+    # Take the screenshot
+    # I have no idea why "$MODE" doesn't work but $MODE work
+    hyprshot --mode $MODE --output-folder "$SAVE_DIR" --filename "$FILENAME" --silent
+
+    if [ ! -f "$FILEPATH" ]; then
+        echo "Failed to take screenshot, exiting."
+        exit 1
+    fi
+
+    # Copy to clipboard
+    # wl-copy < "$FILEPATH" # hyprshot already copied the file to the clipboard
+
+    # Notify using notify-send
+    notify_screenshot "$FILEPATH"
+}
+
+# Function to notify screenshot with actions
+notify_screenshot() {
+    local FILE="$1"
+    local TIMEOUT=10  # Timeout value in seconds
+
+    # Send notification with notify-send and actions
+    ACTION=$(timeout "$TIMEOUT" notify-send "Screenshot Taken" "$FILE" \
+                --icon="$FILE" \
+                --action=open:"Open" \
+                --action=locate:"Locate" \
+                --action=edit:"Edit")
+
+    # Check if notify-send timed out
+    if [ $? -ne 0 ]; then
+        # echo "Notification timed out. Exiting."
+        return 1
+    fi
+
+    # Wait for notification action
+    case "$ACTION" in
+        0)
+            feh "$FILE" & ;;
+        1)
+            thunar "$SAVE_DIR" & ;;
+        2)
+            EDITED_FILE="${FILE%.png}_modified.png"
+            swappy -f "$FILE" -o "$EDITED_FILE"
+            wl-copy < "$EDITED_FILE" & ;;
+        *)
+            echo "Unknown action: $ACTION" ;;
+    esac
+}
+
+
+# Parse command-line arguments
+case "$1" in
+    full|window|snip)
+        take_screenshot "$1" "${2:-0}"
+        ;;
+    *)
+        echo "Usage: $0 {full | window | snip} [delay_seconds]"
+        exit 1
+        ;;
+esac
+
+exit 0

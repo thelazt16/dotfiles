@@ -1,0 +1,110 @@
+#!/bin/bash
+
+showNotification() {
+  notify-send -e -u low -a brightness -i "brightness" -h string:x-canonical-private-synchronous:brightness -h "int:value:$1" "Brightness" "Brightness is $2 to $1" 
+}
+
+saveValue() {
+  local status
+  if [ "$1" == "value" ]; then
+    status=$(jq --arg "$1" "$2" '.value |= $value' values/brightness.json > tmp.json)
+  elif [ "$1" == "toggle" ]; then
+    status=$(jq --arg "$1" "$2" '.toggle |= $toggle' values/brightness.json > tmp.json)
+  fi
+  if [[ -z $status ]]; then
+    mv tmp.json values/brightness.json
+  fi
+}
+
+get_bus_number() {
+    local cache_file="$HOME/.cache/ddc_info.json"
+    local bus_number
+
+    # Check if the cache file exists and contains a valid bus_number
+    if [[ -f "$cache_file" ]]; then
+        bus_number=$(jq -r '.bus_number' "$cache_file")
+        if [[ -n "$bus_number" && "$bus_number" != "null" ]]; then
+            echo "$bus_number"
+            return
+        fi
+    fi
+
+    # Cache file does not exist or bus_number is invalid, get the bus number from ddcutil
+    bus_number=$(ddcutil detect | grep -oP '/dev/i2c-\K[0-9]+')
+
+    # Write the bus number to the cache file
+    echo "{\"bus_number\": \"$bus_number\"}" > "$cache_file"
+
+    # Return the bus number
+    echo "$bus_number"
+}
+
+brightness() {
+  local scriptDir=$HOME/.config/hypr/scripts
+  cd "$scriptDir" || exit 0
+  local type=$1
+  local busnumber
+  busnumber=$(get_bus_number)
+  local value=${2:-10}
+  local toggle
+  local currentValue
+  local status
+  local COMMAND="ddcutil --bus=$busnumber --disable-dynamic-sleep  --sleep-multiplier 0.1 " # Disable dynamic sleep and reduce sleep multiplier so the command run faster
+  # echo "$value";
+  case "$type" in
+    up)
+      eval "$COMMAND" setvcp 10 + "$value"
+      status="increased"
+    ;;
+    down)
+      eval "$COMMAND" setvcp 10 - "$value"
+      status="decreased"
+    ;;
+    set)
+      eval "$COMMAND" setvcp 10 "$value"
+      status="set"
+    ;;
+    toggle)
+      currentValue=$(jq -r '.value' values/brightness.json)
+      toggle=$(jq -r '.toggle' values/brightness.json)
+      if [ "$toggle" == "off" ]; then
+        eval "$COMMAND" setvcp 10 0
+        saveValue "toggle" "on"
+        status="dimmed"
+        showNotification "0" "$status"
+      else
+        eval "$COMMAND" setvcp 10 "$currentValue"
+        saveValue "toggle" "off"
+        status="restored back"
+        showNotification "$currentValue" "$status"
+      fi
+    ;;
+  esac
+  case "$type" in
+    up|down|set)
+      currentValue=$(eval "$COMMAND" getvcp 10 | sed -n 's/.*current value = *\(.*\), max value.*/\1/p')
+      saveValue "value" "$currentValue"
+      showNotification "$currentValue" "$status"
+    ;;
+  esac
+}
+
+# Check if at least one argument is provided
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 {up | down | toggle | set} [value]"
+  exit 1
+fi
+
+# Parse command-line arguments
+case "$1" in
+  up|down|toggle|set)
+    brightness "$1" "$2"
+    ;;
+  *)
+    echo "Invalid brightness command: $1"
+    echo "Usage: $0 {up | down | toggle | set} [value]"
+    exit 1
+    ;;
+esac
+
+exit 0

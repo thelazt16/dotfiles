@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Total sleep time in seconds
+total_time=3600
+
+# Notification times in seconds (from the end)
+notify_times=(2700 1800 900 300 60)
+
+# Function to send notifications
+send_notification() {
+  local remaining_time=$1
+  if [[ $remaining_time -ge 60 ]]; then
+    echo "Notification: $((remaining_time / 60)) minutes remaining."
+  else
+    echo "Notification: $remaining_time seconds remaining."
+  fi
+}
+
+# Main loop
+start_time=$(date +%s)
+end_time=$((start_time + total_time))
+
+while [ "$(date +%s)" -lt $end_time ]; do
+  current_time=$(date +%s)
+  elapsed_time=$((current_time - start_time))
+  remaining_time=$((total_time - elapsed_time))
+  
+  for notify_time in "${notify_times[@]}"; do
+    if [ $remaining_time -eq "$notify_time" ]; then
+      send_notification $remaining_time
+      break
+    fi
+  done
+
+  sleep 1
+done
+
+echo "Time is up!"
