@@ -215,7 +215,7 @@ eval "$(atuin init zsh)"
 # ┣ ┗┫┣   ┃ ┣┫┃┃┃┃┃┣ ┗┓
 # ┗┛┗┛┗┛  ┗┛┛┗┛┗┻┛┻┗┛┗┛
 # Last but not least, UNLEASH the eye candies
-# $HOME/bin/colorscript -r
+$HOME/bin/colorscript -r
 fortune
 
 # Check how fast the prompt open
