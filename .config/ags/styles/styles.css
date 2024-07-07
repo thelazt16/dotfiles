@@ -27,22 +27,22 @@ button:hover.os-icon {
 	background-color: transparent;
 }
 
+.outer-workspace {
+	background-color: rgba(255, 255, 255, 0.075);
+	border-radius: 20px;
+	margin: 2px;
+	padding: 4px;
+}
+
 .workspace {
 	background-color: rgba(255, 255, 255, 0.15);
 	/* padding: 0; */
 }
 
-.outer-workspace {
-	background-color: rgba(255, 255, 255, 0.075);
-	border-radius: 20px;
-	margin: 2px;
-	padding: 2px;
-}
-
 .workspace button {
 	background-color: transparent;
-	padding-left: 6px;
-	padding-right: 6px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .workspace.first {
@@ -68,8 +68,8 @@ button:hover.os-icon {
 	background-color: @mauve;
 	color: @base;
 	font-weight: bold;
-	padding-left: 6px;
-	padding-right: 6px;
+	padding-left: 5px;
+	padding-right: 5px;
 	border-radius: 20px;
 }
 
