@@ -81,6 +81,24 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
 zstyle ':omz:plugins:nvm' lazy yes
+
+# ┏┓┓ ┳┳┏┓┳┳┓┏┓  ┏┓┏┓┏┳┓┏┳┓┳┳┓┏┓┏┓
+# ┃┃┃ ┃┃┃┓┃┃┃┗┓  ┗┓┣  ┃  ┃ ┃┃┃┃┓┗┓
+# ┣┛┗┛┗┛┗┛┻┛┗┗┛  ┗┛┗┛ ┻  ┻ ┻┛┗┗┛┗┛
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# auto-notify settings
+export AUTO_NOTIFY_THRESHOLD=30
+export AUTO_NOTIFY_EXPIRE_TIME=5000
+export AUTO_NOTIFY_TITLE="Wake up! %command has just finished"
+export AUTO_NOTIFY_BODY="It completed in %elapsed seconds with exit code %exit_code"
+export AUTO_NOTIFY_ICON_SUCCESS=/usr/share/icons/Papirus/48x48/emblems/emblem-success.svg
+export AUTO_NOTIFY_ICON_FAILURE=/usr/share/icons/Papirus/48x48/emblems/emblem-unavailable.svg
+
 # ╔╗ ╔═╗╔═╗╦╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗╔═╗
 # ╠╩╗╠═╣╚═╗║║    ║  ║ ║║║║╠╣ ║║ ╦╚═╗
 # ╚═╝╩ ╩╚═╝╩╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝╚═╝
@@ -113,12 +131,6 @@ setopt LIST_PACKED		    # The completion menu takes less space.
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
 setopt PROMPT_SUBST         # enable command substitution in prompt
 setopt SHAREHISTORY         # share history to other prompt right away not at launch
-
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # ╦╔═╔═╗╦ ╦╔╗ ╦╔╗╔╔╦╗╦╔╗╔╔═╗╔═╗
 # ╠╩╗║╣ ╚╦╝╠╩╗║║║║ ║║║║║║║ ╦╚═╗
@@ -156,6 +168,7 @@ bindkey "\`\`" add_sudo
 # Sourcing binary directories to load to $PATH
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.npm-global/bin" ] && PATH="$HOME/.npm-global/bin:$PATH"
 
 # ┓ ┏┳┳┓  ┏┓┏┓┏┓┏┓┳┏┓┳┏┓
 # ┃┃┃┃┃┃  ┗┓┃┃┣ ┃ ┃┣ ┃┃ 
