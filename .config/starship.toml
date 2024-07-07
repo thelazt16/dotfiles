@@ -1,0 +1,22 @@
+# A continuation prompt that displays two filled-in arrows
+continuation_prompt = '󰉡󰉡󰉡❯'
+
+# [sudo]
+# style = 'bold green'
+# symbol = ' '
+# disabled = false
+
+# [time]
+# disabled = false
+# format = '[$time]($style) '
+# time_format = '%I:%M'
+# utc_time_offset = '-5'
+# time_range = '10:00:00-14:00:00'
+
+# [username]
+# style_user = 'blue bold'
+# style_root = 'red bold'
+# format = '[ $user]($style) '
+# disabled = false
+# show_always = true
+# aliases = { "root" = "SUPER" }

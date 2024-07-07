@@ -20,8 +20,8 @@ export const getHoliday = async (date = new Date()) => {
 	if (!fileExists(filePath)) await fetchHolidays(year);
 
 	try {
-		const holidaysDataRaw = await Utils.readFileAsync(filePath);
-		const holidaysData = JSON.parse(holidaysDataRaw); // Parse JSON data
+		const holidaysDataJSON = await Utils.readFileAsync(filePath);
+		const holidaysData = JSON.parse(holidaysDataJSON); // Parse JSON data
 
 		const formattedDate = date.toISOString().slice(0, 10); // Convert date to YYYY-MM-DD format
 		// const formattedDate = "2024-02-8";
