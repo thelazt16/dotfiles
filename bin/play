@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Define search paths
+SEARCH_PATHS=(
+    '/mnt/Libraries/Downloads/Series and Movies/'
+    '/home/zev/Downloads'
+)
+
+# Define file types to search for
+FILE_TYPES=(
+    "mkv"
+    "mp4"
+    "avi"
+    "zip"
+    "rar"
+    "m4v"
+    "flv"
+)
+
+# Initialize a variable to store find options
+find_options=""
+
+# Iterate over each file type and construct find options
+for (( i=0; i<${#FILE_TYPES[@]}; i++ )); do
+    find_options+=" -iname \"*.${FILE_TYPES[i]}\""
+    if [ $i -lt $((${#FILE_TYPES[@]} - 1)) ]; then
+        find_options+=" -o"
+    fi
+done
+
+# Print find options as a single line
+# echo "$find_options"
+
+# :TODO Change the iname in list_files() with $find_options
+# Keep getting error => find: paths must precede expression: ` -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" -o -iname "*.zip" -o -iname "*.rar" -o -iname "*.m4v" -o -iname "*.flv"'
+
+# Function to list files in search paths and sort by filename
+list_files() {
+    for path in "${SEARCH_PATHS[@]}"; do
+        # List files in the current path and sort by filename
+        find "$path" \( -iname "*.mkv" -o -iname "*.mp4" -o -iname "*.avi" -o -iname "*.zip" -o -iname "*.rar" -o -iname "*.m4v" -o -iname "*.flv" \) -type f -print0 | xargs -0 -I{} basename "{}" | sort -u
+    done
+}
+
+# List all files and sort
+files=$(list_files)
+# echo "Files found:"
+# echo "$files" # Debug: Display the list of files found
+
+# Use rofi to select a file interactively with fuzzy matching
+selected_file=$(echo "$files" | rofi -dmenu -i -matching regex -p "Select a file:" -theme "$HOME/.bin/bspwm/play.rasi")
+echo "Selected file: $selected_file" # Debug: Display the selected file
+
+# Check if a file was selected and output its full path
+if [ -n "$selected_file" ]; then
+    # Loop through search paths to find the full path of the selected file
+    for path in "${SEARCH_PATHS[@]}"; do
+        echo "Checking path: $path" # Debug: Display the current path being checked
+        # Find the full path using find with -print0 and grep to handle special characters
+        full_path=$(find "$path" -type f -print0 | grep -zF "$selected_file")
+        # full_pathe=$full_path[0]
+        # smplayer "$full_path"
+        if [ -n "$full_path" ]; then
+            # echo "Full path found: $full_path" # Debug: Display the full path found
+            smplayer "$full_path"
+        #     # Print the full path found
+            # smplayer "$(printf '%s\n' \"$full_path\")"
+            break
+        fi
+    done
+fi
