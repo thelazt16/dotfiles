@@ -7,8 +7,13 @@ export const fetchHolidays = async (year) => {
 		);
 		const text = await response.text();
 
-		const userCacheDir = GLib.get_user_cache_dir();
-		const holidaysDir = GLib.build_filenamev([userCacheDir, "ags", "holidays"]);
+		const userConfigDir = GLib.get_user_config_dir(); // Get ~/.config directory
+		const holidaysDir = GLib.build_filenamev([
+			userConfigDir,
+			"ags",
+			".cache",
+			"holidays",
+		]);
 		const filePath = GLib.build_filenamev([holidaysDir, `${year}.json`]);
 
 		// Ensure the holidays directory exists
