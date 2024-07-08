@@ -1,11 +1,11 @@
 const { Box, Label } = Widget;
 import { getHoliday } from "../../functions/getHoliday.js";
 
-const holiday = await Variable("", {
+const holiday = await Variable(undefined, {
 	poll: [
 		3600000,
 		async () => {
-			return await getHoliday();
+			return await getHoliday(new Date());
 		},
 	],
 });
@@ -38,7 +38,6 @@ const getDateTime = Variable(new Date(), {
 });
 
 export const DateTime = () => {
-	// print(JSON.stringify(holiday));
 	const dateLabel = Label({
 		class_name: "date",
 		hpack: "end",
@@ -57,8 +56,9 @@ export const DateTime = () => {
 		hpack: "end",
 		setup: (self) => {
 			// print(JSON.stringify(getDateTime));
+			// print(JSON.stringify(holiday.value));
 			self.hook(getDateTime, () => {
-				holiday || getDateTime.value.isWeekend
+				holiday.value || getDateTime.value.isWeekend
 					? self.toggleClassName("critical", true)
 					: self.toggleClassName("critical", false);
 				self.children = [timeLabel, dateLabel];

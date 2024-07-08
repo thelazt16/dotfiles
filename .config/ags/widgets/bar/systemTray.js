@@ -7,8 +7,8 @@ export const SysTray = () => {
 			Button({
 				className: "tray-icon icon",
 				child: Icon({ icon: item.bind("icon"), size: 16 }),
-				on_primary_click: (_, event) => item.activate(event),
-				on_secondary_click: (_, event) => item.openMenu(event),
+				onPrimaryClick: (_, event) => item.activate(event),
+				onSecondaryClick: (_, event) => item.openMenu(event),
 				tooltip_markup: item.bind("tooltip_markup"),
 			})
 		)
