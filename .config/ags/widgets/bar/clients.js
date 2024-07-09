@@ -1,4 +1,3 @@
-const Hyprland = await Service.import("hyprland");
 const { Box } = Widget;
 // import { WorkspaceClients } from "./clients/workspaceClients.js";
 // import { SpecialClients } from "./clients/specialClients.js";
@@ -20,6 +19,6 @@ import { WorkspaceAndSpecialClients } from "./clients/workspaceAndSpecialClients
 // };
 
 export const Clients = () =>
-  Box({
-    child: WorkspaceAndSpecialClients(),
-  });
+	Box({
+		child: WorkspaceAndSpecialClients(),
+	});

@@ -1,7 +1,13 @@
-const { Box, Label } = Widget;
+const { Box, Button, Label } = Widget;
 import { getHoliday } from "../../functions/getHoliday.js";
+import {
+	countDownTime,
+	startCountDown,
+	stopCountDown,
+} from "../../functions/sleepTimer.js";
+import { toggleBox } from "./countDown.js";
 
-const holiday = await Variable(undefined, {
+const holiday = await Variable("", {
 	poll: [
 		3600000,
 		async () => {
@@ -17,12 +23,10 @@ const getDateTime = Variable(new Date(), {
 			const currentDate = new Date();
 			const dayOfWeek = currentDate.getDay();
 			const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // 0 is Sunday, 6 is Saturday
-			// const isWeekend = false;
 
 			return {
 				date: `${currentDate.toLocaleDateString("en-US", {
 					weekday: "long",
-					// year: "numeric",
 					month: "short",
 					day: "numeric",
 				})}`,
@@ -41,28 +45,46 @@ export const DateTime = () => {
 	const dateLabel = Label({
 		class_name: "date",
 		hpack: "end",
-		label: getDateTime.value.date,
+	}).hook(getDateTime, (self) => {
+		self.label = getDateTime.value.date;
 	});
-
 	const timeLabel = Label({
 		className: "time",
 		hpack: "end",
-		label: getDateTime.value.time,
+	}).hook(getDateTime, (self) => {
+		self.label = getDateTime.value.time;
 	});
-	return Box({
-		className: "date-time",
-		vexpand: true,
-		vertical: true,
-		hpack: "end",
-		setup: (self) => {
-			// print(JSON.stringify(getDateTime));
-			// print(JSON.stringify(holiday.value));
-			self.hook(getDateTime, () => {
-				holiday.value || getDateTime.value.isWeekend
-					? self.toggleClassName("critical", true)
-					: self.toggleClassName("critical", false);
-				self.children = [timeLabel, dateLabel];
-			});
+
+	return Button({
+		onSecondaryClick: () => {
+			if (countDownTime == undefined) startCountDown(60, "suspend");
+			else {
+				stopCountDown();
+				toggleBox();
+			}
 		},
+		child: Box({
+			className: "date-time",
+			vertical: true,
+			hpack: "end",
+			setup: (self) => {
+				const updateClassName = () => {
+					// print(JSON.stringify(getDateTime));
+					// print(JSON.stringify(holiday.value));
+					const isHoliday = holiday.value;
+					const isWeekend = getDateTime.value.isWeekend;
+					if (isHoliday || isWeekend) {
+						self.toggleClassName("critical", true);
+					} else {
+						self.toggleClassName("critical", false);
+					}
+					self.children = [timeLabel, dateLabel];
+				};
+
+				// Hook into both getDateTime and holiday variables
+				self.hook(getDateTime, updateClassName);
+				self.hook(holiday, updateClassName);
+			},
+		}),
 	});
 };

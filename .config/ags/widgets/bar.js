@@ -1,3 +1,5 @@
+const Hyprland = await Service.import("hyprland");
+
 const { Box, CenterBox, Window } = Widget;
 
 import { Workspaces } from "./bar/workspaces.js";
@@ -12,10 +14,12 @@ import { MemoryUsage } from "./bar/memoryUsage.js";
 import { CPUUsage } from "./bar/cpuUsage.js";
 import { Temperature } from "./bar/temperature.js";
 import { CheckUpdates } from "./bar/checkUpdates.js";
+import { CountDown } from "./bar/countDown.js";
 
 // Bar layout
-function Left() {
+const Left = () => {
 	return Box({
+		hpack: "start",
 		spacing: 8,
 		children: [
 			OSIcon(),
@@ -26,41 +30,47 @@ function Left() {
 			ActiveClient(),
 		],
 	});
-}
+};
 
-function Center() {
+const Center = () => {
 	return Box({
+		hpack: "center",
 		spacing: 8,
 		children: [Workspaces()],
 	});
-}
+};
 
-function Right() {
+const Right = () => {
 	return Box({
 		hpack: "end",
 		spacing: 8,
 		children: [
 			NetworkIndicator(),
 			Volume(),
+			CountDown(),
 			CheckUpdates(),
 			SysTray(),
 			DateTime(),
 		],
 	});
-}
+};
 
-export function Bar(monitor = 0) {
-	return Window({
+export const Bar = (monitor = 0) =>
+	Window({
+		monitor,
 		name: `bar-${monitor}`, // name has to be unique
 		className: "bar",
-		monitor,
-		anchor: ["top", "left", "right"],
 		exclusivity: "exclusive",
+		anchor: ["top", "left", "right"],
 		child: CenterBox({
+			css: "min-width: 2px; min-height: 2px;",
 			className: "bar-window",
-			start_widget: Left(),
-			center_widget: Center(),
-			end_widget: Right(),
+			startWidget: Left(),
+			centerWidget: Center(),
+			endWidget: Right(),
 		}),
+		// setup: (self) =>
+		// 	self.hook(Hyprland, () => {
+		// 		print(self.monitor);
+		// 	}),
 	});
-}

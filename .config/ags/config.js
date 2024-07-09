@@ -1,6 +1,7 @@
 import { Bar } from "./widgets/bar.js";
 // import { NotificationPopups } from "./widgets/notification.js";
 import { debug } from "./debug.js";
+import { forMonitors } from "./lib/utils.js";
 
 // debug.hypr();
 // debug.active();
@@ -13,8 +14,8 @@ App.config({
 	gtkTheme: "Lavanda-Dark-Compact-Tokyonight",
 	// cursorTheme: "Phinger Cursors (light)",
 	iconTheme: "Papirus-Dark",
-	windows: [
-		Bar(),
+	windows: () => [
+		...forMonitors(Bar),
 		// NotificationPopups(),
 
 		// you can call it, for each monitor

@@ -8,14 +8,16 @@ export const ActiveClient = () => {
 		className: "active-client-label",
 		wrap: true,
 		truncate: "end",
-		xalign: 0,
-		maxWidthChars: 30,
+		hpack: "start",
+		maxWidthChars: 50,
 		useMarkup: true,
+		label: "Lorem Ipsum", // add placeholder so when it gets update it wouldn't cause a flicker
 	});
 
 	// Initialize the clientIcon with a placeholder, to be updated in the hook
 	const clientIcon = Box({
 		className: "active-client-icon",
+		child: getIcon("workspace", "", 1),
 	});
 
 	const activeClient = Box({
