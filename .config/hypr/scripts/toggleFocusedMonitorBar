@@ -1,0 +1,5 @@
+#!/bin/bash
+
+monitorID=$(hyprctl activewindow -j | jq -r '.monitor')
+
+ags --toggle-window "bar-$monitorID"
