@@ -1,6 +1,6 @@
 #!/bin/bash
 
-monitorID=$(hyprctl activewindow -j | jq -r '.monitor')
+monitorID=$(hyprctl activeworkspace -j  | jq -r '.monitorID')
 monitorName=$(hyprctl monitors -j | jq -r --arg monitor_id "$monitorID" '.[] | select(.id == ($monitor_id | tonumber)) | .name')
 monitorScaling=$(printf "%.0f" "$(hyprctl monitors -j | jq -r --arg monitor_id "$monitorID" '.[] | select(.id == ($monitor_id | tonumber)) | .scale')")
 
