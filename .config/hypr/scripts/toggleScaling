@@ -1,0 +1,10 @@
+#!/bin/bash
+
+monitorID=$(hyprctl activewindow -j | jq -r '.monitor')
+monitorName=$(hyprctl monitors -j | jq -r --arg monitor_id "$monitorID" '.[] | select(.id == ($monitor_id | tonumber)) | .name')
+monitorScaling=$(printf "%.0f" "$(hyprctl monitors -j | jq -r --arg monitor_id "$monitorID" '.[] | select(.id == ($monitor_id | tonumber)) | .scale')")
+
+scaling=1
+[ "$monitorScaling" -eq 1 ] && scaling=2
+
+hyprctl keyword monitor "$monitorName,highrr,auto,$scaling"
