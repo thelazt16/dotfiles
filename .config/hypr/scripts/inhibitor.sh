@@ -7,9 +7,13 @@ check() {
 start() {
     status=$(check)
     if [[ ! $status ]]; then
-        kitty --class kittyinhibit --title kittyinhibit -e sleep 86400 &
+        app_name="kittyinhibit"
+        hyprctl keyword windowrulev2 "workspace 69 silent, class:^($app_name)$" > /dev/null
+        hyprctl keyword windowrulev2 "idleinhibit always, class:^($app_name)$" > /dev/null
+        kitty --class $app_name --title $app_name -e sleep 86400 &
         kitty_pid=$!
         echo "$kitty_pid" > /tmp/kittyinhibit.pid
+        hyprctl keyword windowrulev2 "unset, class:^($app_name)$" > /dev/null
         status=$(check)
         [[ $status ]] && echo 1
     else 
