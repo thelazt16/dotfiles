@@ -13,7 +13,6 @@ start() {
         kitty --class $app_name --title $app_name -e sleep 86400 &
         kitty_pid=$!
         echo "$kitty_pid" > /tmp/kittyinhibit.pid
-        hyprctl keyword windowrulev2 "unset, class:^($app_name)$" > /dev/null
         status=$(check)
         [[ $status ]] && echo 1
     else 
@@ -27,7 +26,7 @@ stop() {
         kill "$status" 
         rm /tmp/kittyinhibit.pid
         status=$(check)
-        [[ ! $status ]] && echo 1
+        [[ ! $status ]] && hyprctl keyword windowrulev2 "unset, class:^($app_name)$" > /dev/null && echo 1
     fi
 }
 
