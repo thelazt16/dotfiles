@@ -14,7 +14,7 @@ handleSleep() {
   local notification
 
   case "$type" in
-    sleep)
+    sleep|suspend)
       notification="Sleeping"
       COMMAND="systemctl suspend"
       ;;
@@ -33,7 +33,7 @@ handleSleep() {
   sleep "$valueInSeconds"
 
   case "$type" in
-    sleep|hibernate)
+    sleep|suspend|hibernate)
       handlePlayback
       sleep 1
       ;;
@@ -45,11 +45,11 @@ handleSleep() {
 
 # Parse command-line arguments
 case "$1" in
-    sleep|hibernate|shutdown)
+    sleep|suspend|hibernate|shutdown)
         handleSleep "$1" "${2:-60}"
         ;;
     *)
-        echo "Usage: $0 {sleep|hibernate|shutdown} [value in minute]"
+        echo "Usage: $0 {sleep|suspend|hibernate|shutdown} [value in minute]"
         exit 1
         ;;
 esac

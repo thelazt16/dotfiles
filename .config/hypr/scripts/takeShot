@@ -69,9 +69,9 @@ notify_screenshot() {
     # Send notification with notify-send and actions
     ACTION=$(timeout "$TIMEOUT" notify-send "Screenshot Taken" "$FILE" \
                 --icon="$FILE" \
-                --action=open:"Open" \
-                --action=locate:"Locate" \
-                --action=edit:"Edit")
+                --action="Open" \
+                --action="Locate" \
+                --action="Edit")
 
     # Check if notify-send timed out
     if [ $? -ne 0 ]; then
@@ -84,7 +84,7 @@ notify_screenshot() {
         0)
             feh "$FILE" & ;;
         1)
-            thunar "$SAVE_DIR" & ;;
+            nautilus "$FILE" & ;;
         2)
             EDITED_FILE="${FILE%.png}_modified.png"
             swappy -f "$FILE" -o "$EDITED_FILE"
