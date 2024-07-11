@@ -15,6 +15,7 @@ import { CPUUsage } from "./bar/cpuUsage.js";
 import { Temperature } from "./bar/temperature.js";
 import { CheckUpdates } from "./bar/checkUpdates.js";
 import { CountDown } from "./bar/countDown.js";
+import { Inhibitor } from "./bar/inhibitor.js";
 
 // Bar layout
 const Left = () => {
@@ -47,8 +48,9 @@ const Right = () => {
 		children: [
 			NetworkIndicator(),
 			Volume(),
-			CountDown(),
 			CheckUpdates(),
+			CountDown(),
+			Inhibitor(),
 			SysTray(),
 			DateTime(),
 		],

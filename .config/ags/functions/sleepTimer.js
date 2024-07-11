@@ -6,9 +6,7 @@ const sleepOptions = ["suspend", "hibernate", "shutdown"];
 
 const timerEnd = () => {
 	toggleBox();
-	if (sleepType === "suspend" || sleepType === "hibernate")
-		Utils.exec(`bash -c "systemctl ${sleepType}"`);
-	if (sleepType === "shutdown") Utils.exec(`bash -c "shutdown now"`);
+	Utils.exec(`bash -c "~/.config/hypr/scripts/sleepIn ${sleepType} 0"`);
 };
 
 const currentDistance = Variable(

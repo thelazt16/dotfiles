@@ -6,6 +6,7 @@ import {
 	stopCountDown,
 } from "../../functions/sleepTimer.js";
 import { toggleBox } from "./countDown.js";
+import { inhibitorID, startInhibitor, stopInhibitor } from "./inhibitor.js";
 
 const holiday = await Variable("", {
 	poll: [
@@ -42,6 +43,7 @@ const getDateTime = Variable(new Date(), {
 });
 
 export const DateTime = () => {
+	print(JSON.stringify(inhibitorID));
 	const dateLabel = Label({
 		class_name: "date",
 		hpack: "end",
@@ -63,6 +65,13 @@ export const DateTime = () => {
 				toggleBox();
 			}
 		},
+		setup: (btn) =>
+			btn.hook(inhibitorID, () => {
+				btn.onMiddleClick = () => {
+					if (!inhibitorID.value) startInhibitor();
+					if (inhibitorID.value) stopInhibitor();
+				};
+			}),
 		child: Box({
 			className: "date-time",
 			vertical: true,

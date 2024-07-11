@@ -18,6 +18,7 @@ start() {
     else 
         echo 2
     fi
+    return
 }
 
 stop() {
@@ -28,6 +29,7 @@ stop() {
         status=$(check)
         [[ ! $status ]] && hyprctl keyword windowrulev2 "unset, class:^($app_name)$" > /dev/null && echo 1
     fi
+    return
 }
 
 # Parse command-line arguments
